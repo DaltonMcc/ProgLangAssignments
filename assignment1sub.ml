@@ -14,6 +14,9 @@
    It should have type: int * int * int -> int * int * int
 *)
 
+let fixLastTwo(x, y, z : int * int * int) = if (y > z) then (x, z, y) else (x, y, z);;
+(*ran*) (*WORKS!*)
+
 
 (*
    Write a function named "order" that takes a triple of integers and
@@ -21,6 +24,9 @@
    You may want to use the function from the previous part.
    It should have type: int * int * int -> int * int * int
 *)
+
+let order((x, y, z) : (int * int * int)) = if (x < y && x < z) then fixLastTwo(x, y, z) else (if (y<z && y<x) then fixLastTwo(y, x, z) else fixLastTwo(z, x, y));;
+(*ran*) (*WORKS!*)
 
 
 (*
@@ -30,6 +36,8 @@
    It should have type: int * int -> int
 *)
 
+let distance((x, y) : (int * int)) = if (x>y) then x-y else y-x;;
+(*ran*) (*WORKS!*)
 
 
 
@@ -43,6 +51,9 @@
 *)
 
 
+let greeting((x, y) : (int * string)) = "Greetings "^y^", you are "^string_of_int(x)^" years old!";;
+(*ran*) (*WORKS!*)
+
 
 (*
    Write a function "greeting2" that is similarly given a pair of an integer (age)
@@ -55,6 +66,9 @@
    You may see "bytes" instead of "string" as a type.
 *)
 
+let greeting2((x, y) : (int * string)) = "Greetings "^y^", you are "^(if (x<1) then "not born yet!" else if (x>20) then "young at heart!" else "a youngster!");;
+(*ran*) (*WORKS!*)
+
 
 
 (*
@@ -65,6 +79,8 @@
    It should have type: int * string -> bool
 *)
 
+let tooShort((x, y) : (int * string)) = (x>String.length(y));;
+(*ran*) (*WORKS!*)
 
 
 (*
@@ -74,6 +90,8 @@
 *)
 
 
+let totalLength((x, y) : (string * string)) = String.length(x)+String.length(y);;
+(*ran*) (*WORKS!*)
 
 
 (*
@@ -84,7 +102,8 @@
    It should have type: string * string * string -> bool
 *)
 
-
+let orderedByLength((x, y, z) : (string * string * string)) = let e = String.length(y) in ( if e >String.length(z) or String.length(x) > e then false else true);;
+(*ran*)
 
 
 (*
@@ -95,3 +114,5 @@
    It should have type: int * int -> bool
 *)
 
+let prodInRange((x, y) : (int * int)) = (let e = (x*y) in 10<e && e<20);;
+(*ran*) (*WORKS!*)

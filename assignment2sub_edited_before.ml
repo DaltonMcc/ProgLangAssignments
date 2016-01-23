@@ -11,12 +11,9 @@
    Write a function `getnth` that takes as input a pair of an integer n and a list
    of strings. It then returns the nth element in the list, counting from 1. If
    the list does not have n elements, it should raise an exception (Failure "getnth").
-   It should have type: int * string list -> string
 *)
 
-
 let getnth((n, s) : (int * string list)) = "Nth String";;
-
 
 (*
    Write a function `lookup` that takes as input a pair of a string s and a list
@@ -24,12 +21,10 @@ let getnth((n, s) : (int * string list)) = "Nth String";;
    looking for a string that equals s, and if it finds one returns "Some i" where
    i is the corresponding integer in the pair. If it does not find a suitable
    pair then it returns "None".
-   It should have type: string * (string * int) list -> int option
+   It should have type: int * (string * int) list -> int option
 *)
 
-
 let lookup((s, l) : string * (string * int) list) = Some 5;;
-
 
 (*
    Write a function `inPairs` that takes a list of integers and returns a list
@@ -39,7 +34,6 @@ let lookup((s, l) : string * (string * int) list) = Some 5;;
    inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
    It should have type: int list -> (int * int) list
 *)
-
 
 let inPairs(x : int list) = [(1, 2); (3, 4)];;
 
@@ -52,34 +46,21 @@ let inPairs(x : int list) = [(1, 2); (3, 4)];;
    It should have type: int list list -> int list
 *)
 
-
 let flatten(x : (int list) list) = [1; 2; 5; 2; 6];;
-
-
-(*
-   Write a function `remove` that takes as input a pair of an integer n and a
-   list of integers, and removes from that list any occurrence of n.
-   It should have type: int * int list -> int list
-*)
-
-
-let remove((n, l) : int * int list) = [2; 3; 4; 1];;
-
 
 (*
    Write a function `removeDups` that takes a list of integers and returns a
-   list of the integers in the same order, but where any later occurrence of
-   an integer after its first occurrence is removed. For example:
+   list of the integers in the same order where any later occurence of an integer
+   after its first occurence is removed. For example:
    removeDups [4; 1; 2; 1; 4; 5; 20] = [4; 1; 2; 5; 20]
    It should have type: int list -> int list
 *)
 
-
-let removeDups(x : int list) = [2; 3; 4; 1];;
+let removeDups(x : int list) = 
 
 
 (*
-   Write a function `collateSome` that takes as input a list of int options
+   Write a function `collateSome` that takes as input a list of option integers
    and returns a list of integers. The list should consist of those integers that
    were part of a `Some v` in the list, and in the same order. For example:
    collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
@@ -87,7 +68,6 @@ let removeDups(x : int list) = [2; 3; 4; 1];;
 *)
 
 
-let collateSome(x : int option list) = [1; 2; 3];;
 
 
 (*
@@ -99,7 +79,6 @@ let collateSome(x : int option list) = [1; 2; 3];;
 *)
 
 
-let unzip2(x : (int * int) list) = ([5; 3; 0], [2; 4; 4]);;
 
 
 (*
@@ -117,6 +96,4 @@ let unzip2(x : (int * int) list) = ([5; 3; 0], [2; 4; 4]);;
    It should have type: int * int list -> int list option
 *)
 
-
-let makeChange((n, l) : int * int list) = Some [1; 2; 3];;
 

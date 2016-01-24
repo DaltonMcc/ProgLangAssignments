@@ -28,7 +28,7 @@ let getnth((n, s) : (int * string list)) = "Nth String";;
 *)
 
 
-let lookup((s, l) : string * (string * int) list) = Some 5;;
+let lookup((s, y) : string * (string * int) list) = Some 5;;
 
 
 (*
@@ -63,7 +63,7 @@ let flatten(x : (int list) list) = [1; 2; 5; 2; 6];;
 *)
 
 
-let remove((n, l) : int * int list) = [2; 3; 4; 1];;
+let remove((n, y) : int * int list) = [2; 3; 4; 1];;
 
 
 (*
@@ -118,5 +118,5 @@ let unzip2(x : (int * int) list) = ([5; 3; 0], [2; 4; 4]);;
 *)
 
 
-let makeChange((n, l) : int * int list) = Some [1; 2; 3];;
+let makeChange((n, y) : int * int list) = Some [1; 2; 3];;
 

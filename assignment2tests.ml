@@ -14,7 +14,7 @@ let t1e = try (getnth (5, ["first"; "second"; "third"; "fourth"]); false) with
 let t1f = try (getnth (1, []); false) with
 			| Failure "getnth" -> true
 			| _ -> false
-let t1g = gtry (getnth (8, ["first"; "second"; "third"; "fourth"]); false) with
+let t1g = try (getnth (8, ["first"; "second"; "third"; "fourth"]); false) with
 			| Failure "getnth" -> true
 			| _ -> false
 let t1h = getnth (3, ["first"; "second"; "third"; "fourth"]) = "third"

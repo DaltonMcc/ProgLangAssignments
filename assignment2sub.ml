@@ -15,7 +15,14 @@
 *)
 
 
-let getnth((n, s) : (int * string list)) = "Nth String";;
+let rec getnth ((n, ls) : (int * string list)) = 
+   match ls with
+   | [] -> failwith("getnth")
+   | hd :: rest -> 
+      if n = 1
+      then hd
+      else getnth (n-1, rest);; 
+
 
 
 (*
@@ -28,7 +35,13 @@ let getnth((n, s) : (int * string list)) = "Nth String";;
 *)
 
 
-let lookup((s, y) : string * (string * int) list) = Some 5;;
+let rec lookup ((s, lst) : string * (string * int) list) = 
+   match lst with
+   | [] -> None
+   | (hd, count) :: rest -> 
+      if hd = s
+      then Some count
+      else lookup(s, rest)
 
 
 (*
@@ -41,7 +54,11 @@ let lookup((s, y) : string * (string * int) list) = Some 5;;
 *)
 
 
-let inPairs(x : int list) = [(1, 2); (3, 4)];;
+let rec inPairs (lst : int list) = 
+   match lst with
+   | [] -> 0
+   | hd :: rest -> (fst hd, snd hd)@inPairs(rest);;
+
 
 
 (*
@@ -53,7 +70,11 @@ let inPairs(x : int list) = [(1, 2); (3, 4)];;
 *)
 
 
-let flatten(x : (int list) list) = [1; 2; 5; 2; 6];;
+let rec flatten (lst : (int list) list) =
+   match lst with
+   | [] -> []
+   | hd :: lst -> hd@flatten(lst);;
+
 
 
 (*
@@ -63,7 +84,11 @@ let flatten(x : (int list) list) = [1; 2; 5; 2; 6];;
 *)
 
 
-let remove((n, y) : int * int list) = [2; 3; 4; 1];;
+let rec remove ((n, y) : int * int list) = 
+match y with
+| n ->
+| 
+
 
 
 (*
@@ -75,7 +100,14 @@ let remove((n, y) : int * int list) = [2; 3; 4; 1];;
 *)
 
 
-let removeDups(x : int list) = [2; 3; 4; 1];;
+let rec removeDups (lst : int list) = 
+   let Dups = []
+   match lst with
+   | [] -> []
+   | hd :: rest -> 
+      if 
+      then hd@Dups, removeDups(rest)
+      else hd@removerDups(rest) 
 
 
 (*
@@ -87,8 +119,10 @@ let removeDups(x : int list) = [2; 3; 4; 1];;
 *)
 
 
-let collateSome(x : int option list) = [1; 2; 3];;
-
+let rec collateSome (lst : int option list) = 
+match lst with
+| none -> []
+| Some hd :: rest -> hd@collateSome(rest);;
 
 (*
    Write a function `unzip2` that takes as input a list of pairs of integers
@@ -99,7 +133,10 @@ let collateSome(x : int option list) = [1; 2; 3];;
 *)
 
 
-let unzip2(x : (int * int) list) = ([5; 3; 0], [2; 4; 4]);;
+let rec unzip2 (lst : (int * int) list) = 
+match lst with
+| [] -> []
+| (p1, p2) :: rest -> (p1, p2)@unzip2(rest);;
 
 
 (*

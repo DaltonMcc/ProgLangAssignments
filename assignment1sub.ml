@@ -25,7 +25,13 @@ let fixLastTwo(x, y, z : int * int * int) = if (y > z) then (x, z, y) else (x, y
    It should have type: int * int * int -> int * int * int
 *)
 
-let order((x, y, z) : (int * int * int)) = if (x < y && x < z) then fixLastTwo(x, y, z) else (if (y<z && y<x) then fixLastTwo(y, x, z) else fixLastTwo(z, x, y));;
+let order((x, y, z) : (int * int * int)) = 
+if (x < y && x < z) 
+then fixLastTwo(x, y, z) 
+else 
+   if (y<z && y<x) 
+   then fixLastTwo(y, x, z) 
+   else fixLastTwo(z, x, y);;
 (*ran*) (*WORKS!*)
 
 

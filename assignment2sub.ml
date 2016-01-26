@@ -57,7 +57,11 @@ let rec lookup ((s, lst) : string * (string * int) list) =
 let rec inPairs (lst : int list) = 
    match lst with
    | [] -> []
-   | hd :: next -> (hd, next) :: inPairs(next)
+   | hd :: rest -> 
+      match rest with
+      | [] -> []
+      | next :: remaining -> 
+      (hd, next) :: inPairs(remaining)
 
 
 
@@ -104,10 +108,9 @@ let rec remove ((n, lst) : int * int list) =
 
 
 let rec removeDups (lst : int list) = 
-   let Dups = []
    match lst with
    | [] -> []
-   | hd :: rest -> 
+   | hd :: rest -> hd :: removeDups(remove(hd, rest))
 
 
 
@@ -138,9 +141,9 @@ let rec collateSome (lst : int option list) =
 
 
 let rec unzip2 (lst : (int * int) list) = 
-match lst with
-| [] -> []
-| (p1, p2) :: rest -> (p1@unzip2(rest), p2@unzip2(rest))
+   match lst with
+   | [] -> []
+   | (p1, p2) :: rest -> 
 
 
 (*

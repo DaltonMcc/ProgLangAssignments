@@ -56,8 +56,8 @@ let rec lookup ((s, lst) : string * (string * int) list) =
 
 let rec inPairs (lst : int list) = 
    match lst with
-   | [] -> 0
-   | hd :: rest -> (fst hd, snd hd)@inPairs(rest);;
+   | [] -> []
+   | hd :: next -> (hd, next) :: inPairs(next)
 
 
 
@@ -84,10 +84,13 @@ let rec flatten (lst : (int list) list) =
 *)
 
 
-let rec remove ((n, y) : int * int list) = 
-match y with
-| n ->
-| 
+let rec remove ((n, lst) : int * int list) = 
+   match lst with
+   | [] -> []
+   | hd :: rest -> 
+      if hd = n
+      then remove(n, rest)
+      else hd :: remove(n, rest)
 
 
 
@@ -105,9 +108,7 @@ let rec removeDups (lst : int list) =
    match lst with
    | [] -> []
    | hd :: rest -> 
-      if 
-      then hd@Dups, removeDups(rest)
-      else hd@removerDups(rest) 
+
 
 
 (*
@@ -120,9 +121,12 @@ let rec removeDups (lst : int list) =
 
 
 let rec collateSome (lst : int option list) = 
-match lst with
-| none -> []
-| Some hd :: rest -> hd@collateSome(rest);;
+   match lst with
+   | [] -> [] 
+   | hd :: rest -> 
+      match hd with
+      | None -> collateSome(rest)
+      | Some v -> v :: collateSome(rest)
 
 (*
    Write a function `unzip2` that takes as input a list of pairs of integers
@@ -136,7 +140,7 @@ match lst with
 let rec unzip2 (lst : (int * int) list) = 
 match lst with
 | [] -> []
-| (p1, p2) :: rest -> (p1, p2)@unzip2(rest);;
+| (p1, p2) :: rest -> (p1@unzip2(rest), p2@unzip2(rest))
 
 
 (*

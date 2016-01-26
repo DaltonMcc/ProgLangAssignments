@@ -31,14 +31,14 @@ let t2f = lookup ("Dalton", [("Evan", 1); ("Luke", 2); ("Dalton", 3); ("Flynn", 
 
 
 (*---------------------------------------------------*)
-let t3a = inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
-let t3b = inPairs [1; 2; 3; 4; 5; 6] = [(1, 2); (3, 4); (5, 6)]
-let t3c = inPairs [1; 2; 3] = [(1, 2)] (*odd #, 3 is left out*)
-let t3d = inPairs [1; 2] = [(1, 2)]
-let t3e = inPairs [5; 6; 7; 8; 9; 10; 11] = [(5, 6); (7, 8); (9, 10)] (*odd #, 11 is left out*)
-let t3f = inPairs [5; 6; 7; 8; 9; 10; 11; 12] = [(5, 6); (7, 8); (9, 10); (11, 12)]
-let t3g = inPairs [1] = [] (*odd #, no pairs*)
-let t3h = inPairs [] = [] (*nothing*)
+let t3a = inPairs ([1; 2; 3; 4; 5]) = [(1, 2); (3, 4)]
+let t3b = inPairs ([1; 2; 3; 4; 5; 6]) = [(1, 2); (3, 4); (5, 6)]
+let t3c = inPairs ([1; 2; 3]) = [(1, 2)] (*odd #, 3 is left out*)
+let t3d = inPairs ([1; 2]) = [(1, 2)]
+let t3e = inPairs ([5; 6; 7; 8; 9; 10; 11]) = [(5, 6); (7, 8); (9, 10)] (*odd #, 11 is left out*)
+let t3f = inPairs ([5; 6; 7; 8; 9; 10; 11; 12]) = [(5, 6); (7, 8); (9, 10); (11, 12)]
+let t3g = inPairs ([1]) = [] (*odd #, no pairs*)
+let t3h = inPairs ([]) = [] (*nothing*)
 
 
 (*---------------------------------------------------*)
@@ -67,12 +67,12 @@ let t6b = removeDups [1; 2; 3; 4; 5] = [1; 2; 3; 4; 5]
 
 
 (*---------------------------------------------------*)
-let t7a = collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = Some [1; 2; 1; 3]
-let t7b = collateSome [Some 2; Some 2; None; Some 3] = Some [2; 2; 3]
-let t7c = collateSome [None; None; None] = None
-let t7d = collateSome [None; Some 1; None; Some 2; None] = Some [1; 2]
-let t7e = collateSome [Some 5; Some 3; Some 4; None; None; Some 2; Some 1] = Some [5; 3; 4; 2; 1]
-let t7f = collateSome [None; Some 1; Some 2; None; None; None; None; Some 3] = Some [1; 2; 3]
+let t7a = collateSome ([Some 1; None; Some 2; Some 1; None; Some 3]) = [1; 2; 1; 3]
+let t7b = collateSome ([Some 2; Some 2; None; Some 3]) = [2; 2; 3]
+let t7c = collateSome ([None; None; None]) = []
+let t7d = collateSome ([None; Some 1; None; Some 2; None]) = [1; 2]
+let t7e = collateSome ([Some 5; Some 3; Some 4; None; None; Some 2; Some 1]) = [5; 3; 4; 2; 1]
+let t7f = collateSome ([None; Some 1; Some 2; None; None; None; None; Some 3]) = [1; 2; 3]
 
 
 

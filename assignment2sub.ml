@@ -141,9 +141,16 @@ let rec collateSome (lst : int option list) =
 
 
 let rec unzip2 (lst : (int * int) list) = 
-   match lst with
-   | [] -> []
-   | (p1, p2) :: rest -> 
+   let f = [] in
+   let s = [] in
+      match lst with
+      | [] -> []
+      | (p1, p2) :: rest -> 
+         (p1 :: f, p2 :: s) :: unzip2(rest)
+
+
+         
+   
 
 
 (*
@@ -162,5 +169,14 @@ let rec unzip2 (lst : (int * int) list) =
 *)
 
 
-let makeChange((n, y) : int * int list) = Some [1; 2; 3];;
-
+let rec makeChange((n, lst) : int * int list) : int list option = 
+   match lst with
+   | [] -> []
+   | hd :: rest ->
+      if n < 0
+      then None
+      else if n = 0
+         then Some []
+         else match rest with
+            | [] -> []
+            | 

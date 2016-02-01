@@ -82,13 +82,14 @@ let is_tie (t_check) =
 
 let game_from_plays (player1, player2) = 
 
-   
+
 (*
    Write a function `valid_game` that takes as input a game and determines if it is
    a valid game as described above.
    Type: game -> bool
 *)
 
+let valid_game (v_game) = 
 
 
 (*
@@ -116,6 +117,7 @@ type temp = C of float | F of float
    them to distinguish from the integer ones. For example "2.1 +. 5.2"
    Type: temp -> float
 *)
+
 
 
 (*

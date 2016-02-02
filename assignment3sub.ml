@@ -54,10 +54,10 @@ type play = shape list
 
 let result (r_check) =
    match r_check with
-   | hand -> 
-      if fst hand = snd hand
+   | (s1, s2) -> 
+      if s1 = s2
       then Tie
-      else if fst hand > snd hand
+      else if s1 > s2
            then FstWin
            else SndWin
 
@@ -90,6 +90,7 @@ let game_from_plays (player1, player2) =
 *)
 
 let valid_game (v_game) = 
+   
 
 
 (*
@@ -118,7 +119,10 @@ type temp = C of float | F of float
    Type: temp -> float
 *)
 
-
+let to_f (degrees) =
+   match degrees with
+   | 
+   | 
 
 (*
    Write a function `temp_compare` that takes as input a pair of temperatures and
@@ -127,7 +131,7 @@ type temp = C of float | F of float
    Type: temp * temp -> int
 *)
 
-
+let temp_compare ((temp1, temp2)) =
 
 (*
    Write a function `string_of_temp` that takes as input a temperature and
@@ -138,7 +142,7 @@ type temp = C of float | F of float
    Type: temp -> string
 *)
 
-
+let string_of_temp (degrees) = 
 
 
 (*
@@ -147,6 +151,10 @@ type temp = C of float | F of float
    if the list is empty.
    Type: temp list -> temp
 *)
+
+let max_temp (lst_temps) =
+
+
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
    recursive calls are tail calls. You will likely need to define an auxiliary

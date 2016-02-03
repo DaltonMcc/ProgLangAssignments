@@ -80,8 +80,13 @@ let is_tie (t_check) =
    Type: play * play -> game
 *)
 
-let game_from_plays (player1, player2) = 
-
+let game_from_plays (plays) = 
+   let rec aux (l1, l2) =
+      match plays with
+      | ([], []) | (_, []) | ([], _) -> []
+      | (h1 :: rest), (h2 :: remaining) -> 
+         (h1, h2) :: aux (rest, remaining)
+   in aux (plays)
 
 (*
    Write a function `valid_game` that takes as input a game and determines if it is

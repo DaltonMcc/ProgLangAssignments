@@ -24,8 +24,15 @@ let t2h = is_tie (Scissors, Paper) = false
 let t2i = is_tie (Scissors, Scissors) = true
 
 (*--------------------------------------------*)
-let t3a = game_from_plays ([Rock; Paper; Rock], [Scissors; Rock; Rock]) =
-               [(Rock, Scissors); (Paper, Rock); (Rock, Rock)]
+let t3a = game_from_plays ([Rock; Paper; Rock], [Scissors; Rock; Rock]) = [(Rock, Scissors); (Paper, Rock); (Rock, Rock)]
+
+let t3b = game_from_plays ([Rock; Paper], [Rock; Rock]) = [(Rock, Rock); (Paper, Rock)]
+
+let t3c = game_from_plays ([Scissors; Paper; Rock], [Scissors; Rock]) = [(Scissors, Scissors); (Paper, Rock)]
+
+let t3d = game_from_plays ([Rock], [Paper; Rock]) = [(Rock, Paper)]
+
+let t3e = game_from_plays ([Rock; Rock; Rock;], [Rock; Rock; Paper]) = [(Rock, Rock); (Rock, Rock); (Rock, Paper)]
 
 
 (*--------------------------------------------*)

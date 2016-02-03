@@ -80,13 +80,12 @@ let is_tie (t_check) =
    Type: play * play -> game
 *)
 
-let game_from_plays (plays) = 
-   let rec aux (l1, l2) =
+let rec game_from_plays (plays) = 
       match plays with
       | ([], []) | (_, []) | ([], _) -> []
-      | (h1 :: rest), (h2 :: remaining) -> 
-         (h1, h2) :: aux (rest, remaining)
-   in aux (plays)
+      | (h1 :: lst1), (h2 :: lst2) :: rest -> 
+         (h1, h2) :: game_from_plays(rest)
+
 
 (*
    Write a function `valid_game` that takes as input a game and determines if it is
@@ -94,8 +93,7 @@ let game_from_plays (plays) =
    Type: game -> bool
 *)
 
-let valid_game (v_game) = 
-   
+let rec valid_game (v_game) = 
 
 
 (*
@@ -103,6 +101,12 @@ let valid_game (v_game) =
    Type: game -> result
 *)
 
+let rec play_game (game) = 
+   match game with
+   | hd :: rest ->
+      if is_tie hd = true
+      then play_game(rest)
+      else result hd
 
 (* --------------------------------------
             TEMPERATURES

@@ -38,12 +38,11 @@ let t3e = game_from_plays ([Rock; Rock; Rock;], [Rock; Rock; Paper]) = [(Rock, R
 (*--------------------------------------------*)
 let t4a = valid_game [(Rock, Scissors)] = true
 let t4b = valid_game [(Rock, Rock)] = false
-let t4c = valid_game [(Rock, )] = false
-let t4d = valid_game [(Paper, Paper); (Paper, Paper)] = false
-let t4e = valid_game [(Paper, Paper); (Paper, Rock)] = true 
-let t4f = valid_game [(Scissors, Rock)] = true
-let t4g = valid_game [(Paper, Scissors)] = true
-let t4h = valid_game [(Rock, Paper); (Rock, Scissors)] = false
+let t4c = valid_game [(Paper, Paper); (Paper, Paper)] = false
+let t4d = valid_game [(Paper, Paper); (Paper, Rock)] = true 
+let t4e = valid_game [(Scissors, Rock)] = true
+let t4f = valid_game [(Paper, Scissors)] = true
+let t4g = valid_game [(Rock, Paper); (Rock, Scissors)] = false
 
 
 (*--------------------------------------------*)
@@ -64,11 +63,21 @@ let t5g = play_game [(Scissors, Paper)] = FstWin
 
 (*--------------------------------------------*)
 let t6a = to_f (F 2.3) = 2.3
+let t6b = to_f (F 5.5) = 5.5
+let t6c = to_f (F 6.0) = 6.0
+let t6d = to_f (C 0.0) = 32.0
+let t6e = to_f (C 5.2) = 41.36
+let t6f = to_f (C 1.4) = 34.52
 
 
 (*--------------------------------------------*)
 let t7a = temp_compare (F 2.3, F 4.5) = -1
-
+let t7b = temp_compare (C 4.4, C 2.0) = 1
+let t7c = temp_compare (F 32.0, C 0.0) = 0
+let t7d = temp_compare (C 3.1, F 37.76) = -1
+let t7e = temp_compare (C 3.3, C 3.3) = 0 
+let t7f = temp_compare (F 48.8, C 5.1) = 1
+let t7g = temp_compare (F 21.1, F 21.2) = -1
 
 (*--------------------------------------------*)
 let t8a = string_of_temp (C 2.3) = "2.3C"

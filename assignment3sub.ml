@@ -54,10 +54,10 @@ type play = shape list
 
 let result (r_check) =
    match r_check with
-   | (s1, s2) -> 
-      if s1 = s2
+   | check -> 
+      if fst check = snd check
       then Tie
-      else if s1 > s2
+      else if fst check > snd check
            then FstWin
            else SndWin
 
@@ -70,7 +70,7 @@ let result (r_check) =
 
 let is_tie (t_check) =
    match t_check with
-   | hand -> fst hand = snd hand
+   | check -> fst check = snd check
 
 (*
    Write a function `game_from_plays` that takes as input two plays (correspoding
@@ -103,10 +103,10 @@ let rec valid_game (v_game) =
 
 let rec play_game (game) = 
    match game with
-   | hd :: rest ->
-      if is_tie hd = true
+   | check :: rest ->
+      if is_tie check = true
       then play_game(rest)
-      else result hd
+      else result check
 
 (* --------------------------------------
             TEMPERATURES
@@ -130,8 +130,7 @@ type temp = C of float | F of float
 
 let to_f (degrees) =
    match degrees with
-   | 
-   | 
+   | temp -> 
 
 (*
    Write a function `temp_compare` that takes as input a pair of temperatures and
@@ -141,6 +140,8 @@ let to_f (degrees) =
 *)
 
 let temp_compare ((temp1, temp2)) =
+   match temp1 with
+   | temp -> 
 
 (*
    Write a function `string_of_temp` that takes as input a temperature and
@@ -161,7 +162,7 @@ let string_of_temp (degrees) =
    Type: temp list -> temp
 *)
 
-let max_temp (lst_temps) =
+let max_temp (lst_temps) = 
 
 
 (*

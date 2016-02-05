@@ -128,9 +128,10 @@ type temp = C of float | F of float
    Type: temp -> float
 *)
 
-let to_f (degrees) =
+let to_f (degrees) : float =
    match degrees with
-   | temp -> 
+   | F heit-> heit
+   | C sius -> 1.8 *. sius +. 32.0
 
 (*
    Write a function `temp_compare` that takes as input a pair of temperatures and

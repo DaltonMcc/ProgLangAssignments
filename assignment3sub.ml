@@ -141,8 +141,13 @@ let to_f (degrees) : float =
 *)
 
 let temp_compare ((temp1, temp2)) =
-   match temp1 with
-   | temp -> 
+   let t1 = to_f(temp1) in
+   let t2 = to_f(temp2)
+   in if t1 > t2
+      then 1
+      else if t1 < t2
+           then -1
+           else 0
 
 (*
    Write a function `string_of_temp` that takes as input a temperature and

@@ -159,6 +159,9 @@ let temp_compare ((temp1, temp2)) =
 *)
 
 let string_of_temp (degrees) = 
+   match degrees with
+   | F heit -> string_of_float heit ^ "F"
+   | C sius -> string_of_float sius ^ "C"
 
 
 (*

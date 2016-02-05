@@ -94,7 +94,12 @@ let rec game_from_plays (plays) =
 *)
 
 let rec valid_game (v_game) = 
-
+    match v_game with
+    | [] -> 
+    | check :: rest ->
+        if is_tie (check) 
+        then valid_game (rest)
+        else 
 
 (*
    Write a function `play_game` that plays the game as described above.
@@ -171,7 +176,14 @@ let string_of_temp (degrees) =
    Type: temp list -> temp
 *)
 
-let max_temp (lst_temps) = 
+let rec max_temp (lst_temps) = 
+   match lst_temps with
+    | [] -> 0
+    | hd :: rest ->
+        if to_f (hd) > to_f (max_temp (rest))
+        then hd
+        else max_temp (rest)
+
 
 
 (*

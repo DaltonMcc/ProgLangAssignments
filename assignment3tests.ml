@@ -81,12 +81,35 @@ let t7g = temp_compare (F 21.1, F 21.2) = -1
 
 (*--------------------------------------------*)
 let t8a = string_of_temp (C 2.3) = "2.3C"
+let t8b = string_of_temp (C 8.2) = "8.2C"
+let t8c = string_of_temp (C 6.6) = "6.6C"
+let t8d = string_of_temp (F 3.9) = "3.9F"
+let t8e = string_of_temp (F 21.1) = "21.1F"
+let t8f = string_of_temp (F 45.3) = "45.3F"
 
 
 (*--------------------------------------------*)
 let t9a = max_temp [F 2.1; C 2.1] = C 2.1
+let t9b = max_temp [F 3.3; F 3.2; F 3.1; F 3.6] = F 3.6 
+let t9c = max_temp [C 6.6; C 5.6; C 4.6] = C 6.6
+let t9d = max_temp [C 1.5; F 21.4; F 45.1; C 7.2] = F 45.1
+let t9e = max_temp [F 7.4; F 41.9; C 5.6; F 25.7; C 5.5] = C 5.6
+let t9f = max_temp [F 66.2; C 19.1] = C 19.1
+let t9g = max_temp [C 1.1] = C 1.1
+let t9h = try (max_temp []; false) with
+            | Failure "getnth" -> true
+            | _ -> false
 
 
 (*--------------------------------------------*)
 let t10a = max_temp2 [F 2.1; C 2.1] = C 2.1
+let t10b = max_temp2 [F 3.3; F 3.2; F 3.1; F 3.6] = F 3.6 
+let t10c = max_temp2 [C 6.6; C 5.6; C 4.6] = C 6.6
+let t10d = max_temp2 [C 1.5; F 21.4; F 45.1; C 7.2] = F 45.1
+let t10e = max_temp2 [F 7.4; F 41.9; C 5.6; F 25.7; C 5.5] = C 5.6
+let t10f = max_temp2 [F 66.2; C 19.1] = C 19.1
+let t10g = max_temp2 [C 1.1] = C 1.1
+let t10h = try (max_temp2 []; false) with
+            | Failure "getnth" -> true
+            | _ -> false
 

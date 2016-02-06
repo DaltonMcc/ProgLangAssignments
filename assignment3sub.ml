@@ -113,7 +113,7 @@ let rec valid_game (v_game : game) : bool =
 *)
 
 let rec play_game (p_game : game) : result = 
-   match game with
+   match p_game with
    | check :: rest ->
       if is_tie check = true
       then play_game(rest)
@@ -183,13 +183,10 @@ let string_of_temp (degrees : temp) : string =
 *)
 
 let rec max_temp (lst_temps : temp list) : temp = 
-   if lst_temps = []
-   then failwith("max_temps")
-   else match lst_temps with
-        | [] -> F -459.67 (*absolute zero*)
-        | hd :: rest ->
-          if to_f (hd) > to_f (max_temp (rest))
-          then hd
+   match lst_temps with
+        | temp1 :: temp2 :: rest ->
+          if temp_compare (temp1, temp2) = 1
+          then 
           else max_temp (rest)
 
 

@@ -52,7 +52,7 @@ type play = shape list
    Type: check -> result
 *)
 
-let result (r_check) =
+let result (r_check : check) : result =
    match r_check with
    | check -> 
       if fst check = snd check
@@ -68,7 +68,7 @@ let result (r_check) =
    Type: check -> bool
 *)
 
-let is_tie (t_check) =
+let is_tie (t_check : check) : bool =
    match t_check with
    | check -> fst check = snd check
 
@@ -80,11 +80,7 @@ let is_tie (t_check) =
    Type: play * play -> game
 *)
 
-let rec game_from_plays (plays) = 
-      match plays with
-      | ([], []) | (_, []) | ([], _) -> []
-      | (h1 :: lst1), (h2 :: lst2) :: rest -> 
-         (h1, h2) :: game_from_plays(rest)
+let rec game_from_plays (play1, play2 : play * play) : game = 
 
 
 (*
@@ -93,20 +89,22 @@ let rec game_from_plays (plays) =
    Type: game -> bool
 *)
 
-let rec valid_game (v_game) = 
+let rec valid_game (v_game : game) : bool = 
     match v_game with
-    | [] -> 
+    | [] -> false
     | check :: rest ->
         if is_tie (check) 
         then valid_game (rest)
-        else 
+        else if rest != []
+             then false
+             else true
 
 (*
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
 
-let rec play_game (game) = 
+let rec play_game (p_game : game) : result = 
    match game with
    | check :: rest ->
       if is_tie check = true
@@ -133,7 +131,7 @@ type temp = C of float | F of float
    Type: temp -> float
 *)
 
-let to_f (degrees) : float =
+let to_f (degrees : temp) : float =
    match degrees with
    | F heit-> heit
    | C sius -> 1.8 *. sius +. 32.0
@@ -145,7 +143,7 @@ let to_f (degrees) : float =
    Type: temp * temp -> int
 *)
 
-let temp_compare ((temp1, temp2)) =
+let temp_compare (temp1, temp2 : temp * temp) :int =
    let t1 = to_f(temp1) in
    let t2 = to_f(temp2)
    in if t1 > t2
@@ -163,7 +161,7 @@ let temp_compare ((temp1, temp2)) =
    Type: temp -> string
 *)
 
-let string_of_temp (degrees) = 
+let string_of_temp (degrees : temp) : string = 
    match degrees with
    | F heit -> string_of_float heit ^ "F"
    | C sius -> string_of_float sius ^ "C"
@@ -176,7 +174,7 @@ let string_of_temp (degrees) =
    Type: temp list -> temp
 *)
 
-let rec max_temp (lst_temps) = 
+let rec max_temp (lst_temps : temp list) : temp = 
    match lst_temps with
     | [] -> 0
     | hd :: rest ->

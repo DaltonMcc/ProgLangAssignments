@@ -34,6 +34,8 @@ let t3d = game_from_plays ([Rock], [Paper; Rock]) = [(Rock, Paper)]
 
 let t3e = game_from_plays ([Rock; Rock; Rock;], [Rock; Rock; Paper]) = [(Rock, Rock); (Rock, Rock); (Rock, Paper)]
 
+let t3f = game_from_plays ([Paper; Rock], [Scissors]) = [(Paper, Scissors)]
+
 
 (*--------------------------------------------*)
 let t4a = valid_game [(Rock, Scissors)] = true

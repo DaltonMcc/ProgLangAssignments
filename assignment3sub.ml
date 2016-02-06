@@ -80,7 +80,15 @@ let is_tie (t_check : check) : bool =
    Type: play * play -> game
 *)
 
-let rec game_from_plays (play1, play2 : play * play) : game = 
+let game_from_plays (play1, play2 : play * play) : game = 
+   let rec aux (l1, l2) =
+      match l1 with
+      | [] -> []
+      | h1 :: rest -> 
+         match l2 with
+         | [] -> []
+         | h2 :: remaining -> (h1, h2) :: aux (rest, remaining)
+   in aux (play1, play2)
 
 
 (*

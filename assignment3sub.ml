@@ -183,11 +183,14 @@ let string_of_temp (degrees : temp) : string =
 *)
 
 let rec max_temp (lst_temps : temp list) : temp = 
-   match lst_temps with
-        | temp1 :: temp2 :: rest ->
-          if temp_compare (temp1, temp2) = 1
-          then 
-          else max_temp (rest)
+  if lst_temps = []
+  then failwith("max_temp")
+  else match lst_temps with
+       | [] -> F 0.0
+       | temp :: rest ->
+         if to_f (temp) > to_f (max_temp (rest))
+         then temp
+         else max_temp (rest)
 
 
 
@@ -196,3 +199,18 @@ let rec max_temp (lst_temps : temp list) : temp =
    recursive calls are tail calls. You will likely need to define an auxiliary
    function and use state recursion.
 *)
+
+let max_temp2 (lst_temps2 : temp list) : temp =
+   if lst_temps2 = []
+   then failwith("max_temp2")
+   else let rec aux (max_sofar, remaining : temp * temp list) =
+         match remaining with
+         | [] -> max_sofar
+         | p1 :: rest -> 
+            match p1 with
+            | temp -> 
+               if to_f (temp) > to_f (max_sofar)
+               then aux (temp, rest)
+               else aux (max_sofar, rest) 
+
+      in aux (F 0.0, lst_temps2) 

@@ -99,7 +99,7 @@ let t9e = max_temp [F 7.4; F 41.9; C 5.6; F 25.7; C 5.5] = C 5.6
 let t9f = max_temp [F 66.2; C 19.1] = C 19.1
 let t9g = max_temp [C 1.1] = C 1.1
 let t9h = try (max_temp []; false) with
-            | Failure "getnth" -> true
+            | Failure "max_temp" -> true
             | _ -> false
 
 
@@ -112,6 +112,6 @@ let t10e = max_temp2 [F 7.4; F 41.9; C 5.6; F 25.7; C 5.5] = C 5.6
 let t10f = max_temp2 [F 66.2; C 19.1] = C 19.1
 let t10g = max_temp2 [C 1.1] = C 1.1
 let t10h = try (max_temp2 []; false) with
-            | Failure "getnth" -> true
+            | Failure "max_temp2" -> true
             | _ -> false
 

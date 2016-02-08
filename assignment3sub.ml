@@ -183,8 +183,6 @@ let string_of_temp (degrees : temp) : string =
 *)
 
 let rec max_temp (lst_temps : temp list) : temp = 
-  if lst_temps = []
-  then failwith("max_temp")
   else match lst_temps with
        | [] -> F 0.0
        | temp :: rest ->

@@ -12,10 +12,15 @@ let t1c = (thunk (fun () -> "test")) () = "test"
 let t1d = (thunk (fun () -> true)) () = true
 let t1e = (thunk (fun () -> (2, "two"))) () = (2, "two")
 let t1f = (thunk (fun () -> Some 7)) () = Some 7
+let t1f = (thunk (fun () -> [1; 2; 3])) () = [1; 2; 3]
 
 
 (*-----------------------------------------------*)
 let t2a = (thunk_of_value 4) () = 4
+let t2b = (thunk_of_value "test") () = "test"
+let t2c = (thunk_of_value true) () = true
+let t2d = (thunk_of_value (2, "two")) () = (2, "two")
+let t2e = (thunk_of_value [1; 2; 3]) () = [1; 2; 3]
 
 
 (*-----------------------------------------------*)

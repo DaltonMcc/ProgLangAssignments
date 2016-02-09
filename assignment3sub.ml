@@ -182,14 +182,18 @@ let string_of_temp (degrees : temp) : string =
    Type: temp list -> temp
 *)
 
-let rec max_temp (lst_temps : temp list) : temp = 
-  
-  match lst_temps with
-  | [] -> failwith("max_temp")
-  | temp :: rest ->
-    if to_f (temp) > to_f (max_temp (rest))
-    then temp
-    else max_temp (rest)
+let max_temp (lst_temps : temp list) : temp = 
+  if lst_temps = []
+  then failwith("max_temp")
+  else let rec aux (lst : temp list) =
+    match lst with
+    | [] -> F 0.0
+    | temp :: rest ->
+      if to_f (temp) > to_f (aux (rest))
+      then temp
+      else aux (rest)
+
+  in aux (lst_temps)
 
 
 

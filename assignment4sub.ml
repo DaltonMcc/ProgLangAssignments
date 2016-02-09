@@ -34,7 +34,7 @@ type 'a thunk = unit -> 'a
    It should have type: (unit -> 'a) -> 'a thunk
 *)
 
-
+let thunk f = fun () -> f()
 
 (*
    Write a function `thunk_of_value` that takes as input a value of type `'a` and
@@ -43,7 +43,7 @@ type 'a thunk = unit -> 'a
    Should have type: 'a -> 'a thunk
 *)
 
-
+let thunk_of_value x = fun () -> x
 
 (*
    Write a function `thunk_of_eval` that takes as input a pair of a function `'a -> 'b`
@@ -53,7 +53,7 @@ type 'a thunk = unit -> 'a
    It should have type: ('a -> 'b) * 'a -> 'a thunk
 *)
 
-
+let thunk_of_eval (f, x) = f x
 
 
 (*
@@ -65,7 +65,10 @@ type 'a thunk = unit -> 'a
    It should have type: 'a thunk -> 'a option
 *)
 
-
+let try_thunk ('a thunk) = 
+   match 'a thunk with
+   | 
+   | 
 
 (*
    Write a function `thunk_of_pair` that takes as input a pair of thunks, and returns

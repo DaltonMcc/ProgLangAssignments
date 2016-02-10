@@ -65,10 +65,10 @@ let thunk_of_eval (f, x) = fun () -> f x
    It should have type: 'a thunk -> 'a option
 *)
 
-let try_thunk ('a thunk) = 
-   match 'a thunk with
+let try_thunk (a_thunk) = 
+   match a_thunk with
    | 
-   | 
+   | v -> Some v
 
 (*
    Write a function `thunk_of_pair` that takes as input a pair of thunks, and returns
@@ -78,7 +78,7 @@ let try_thunk ('a thunk) =
    It should have type: 'a thunk * 'b thunk -> ('a * 'b) thunk
 *)
 
-
+let thunk_of_pair (f, x) = fun () -> (f(), x())
 
 (*
    Write a function `thunk_map` that takes as input a pair of a `'a thunk` and a
@@ -89,7 +89,7 @@ let try_thunk ('a thunk) =
    It should have type: 'a thunk * ('a -> 'b) -> 'b thunk
 *)
 
-
+let thunk_map (a_thunk, f) = f 
 
 (*
    Write a function `thunk_of_list` that takes as input a list of `'a thunk`s and

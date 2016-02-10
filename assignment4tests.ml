@@ -29,6 +29,10 @@ let t3a = try (try (thunk_of_eval ((fun x -> raise (Failure "")), 4))
           with Failure "" -> true
              | _ -> false
 let t3b = thunk_of_eval ((fun x -> x + 1), 5) () = 6
+let t3c = thunk_of_eval ((fun x -> x ^ " tests"), "more") () = "more tests"
+let t3d = thunk_of_eval ((fun x -> x :: [3; 4; 5]), [1; 2]) () = [1; 2; 3; 4; 5]
+let t3e = thunk_of_eval ((fun x -> x * x), 5) () = 10
+let t3f = thunk_of_eval ((fun x -> x ^ x), "Lu") () = "LuLu"
 
 
 (*-----------------------------------------------*)
@@ -42,6 +46,10 @@ let t5a = let f = fun () -> raise (Failure "")
              with Failure "" -> true
                 | _ -> false
 let t5b = thunk_of_pair ((fun () -> 4), (fun () -> 5)) () = (4, 5)
+let t5c = thunk_of_pair ((fun () -> "more"), (fun () -> "tests")) () = ("more", "tests")
+let t5d = thunk_of_pair ((fun () -> [1; 2; 3]), (fun () -> [7; 8; 9])) () = ([1; 2; 3], [7; 8; 9])
+let t5e = thunk_of_pair ((fun () -> Some 1), (fun () -> Some 2)) () = (Some 1, Some 2)
+let t5f = thunk_of_pair ((fun () -> false), (fun () -> true)) () = (false, true)
 
 
 (*-----------------------------------------------*)

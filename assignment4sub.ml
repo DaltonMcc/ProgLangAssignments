@@ -53,7 +53,7 @@ let thunk_of_value x = fun () ->  x
    It should have type: ('a -> 'b) * 'a -> 'a thunk
 *)
 
-let thunk_of_eval (f, x) = fun () -> f x
+let thunk_of_eval (f, x) = fun () -> f (x())
 
 
 (*
@@ -89,7 +89,7 @@ let thunk_of_pair (f, x) = fun () -> (f(), x())
    It should have type: 'a thunk * ('a -> 'b) -> 'b thunk
 *)
 
-let thunk_map (a_thunk, f) = f 
+let thunk_map (a_thunk, f) = fun () -> 
 
 (*
    Write a function `thunk_of_list` that takes as input a list of `'a thunk`s and
@@ -153,7 +153,13 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table * symbol * 'a -> 'a table
 *)
 
-
+let rec insert (sym_table, sym, val) =
+   match sym_table with
+   | [] -> [(sym, val)]
+   | hd :: rest ->
+      if hd = (sym, val)
+      then 
+      else if  
 
 (*
    Write a function `has` that takes as input a pair of a symbol table and a symbol
@@ -164,7 +170,13 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table * symbol -> bool
 *)
 
-
+let rec has (sym_table, sym) =
+   match sym_table with
+   | [] -> false
+   | hd :: rest ->
+      if fst hd = sym 
+      then true
+      else has (rest, sym)
 
 (*
    Write a function `lookup` that takes as input a pair of a symbol table and a
@@ -176,6 +188,10 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table * symbol -> 'a
 *)
 
+let rec lookup (sym_table, sym) =
+   match sym_table with
+   | [] -> 
+   | hd :: rest ->
 
 
 (*
@@ -198,7 +214,13 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table * symbol -> 'a table
 *)
 
-
+let rec delete (sym_table, sym) =
+   match sym_table with
+   | [] -> []
+   | (s1, v1) :: rest ->
+      if s1 = sym
+      then rest
+      else (s1, v1) :: delete (rest, sym)
 
 (*
    Write a function `keys` that takes as input a symbol table and returns a list
@@ -206,6 +228,11 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table -> symbol list
 *)
 
+let rec keys (sym_table) =
+   match sym_table with
+   | [] -> []
+   | (key, value) :: rest ->
+      key :: keys rest
 
 
 (*
@@ -215,3 +242,8 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table -> bool
 *)
 
+let rec is_proper (sym_table) =
+   match sym_table with
+   | [] -> ""
+   | hd :: rest ->
+      fst hd > is_proper rest

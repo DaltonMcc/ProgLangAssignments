@@ -71,12 +71,27 @@ let t7b = let f = fun () -> 5
           in thunk_of_list [f; f] () = [5; 5]
 
 
+
+
+
+
+
 (*-----------------------------------------------*)
 let t8a = insert (empty, "foo", 3) = [("foo", 3)]
+let t8b = insert ([("foo", 3); ("bar", 2)], "stuff", 1) = [[("foo", 3); ("bar", 2); ("stuff", 1)] 
+let t8c = insert ([("foo", 3); ("bar", 2)], "bar", 2) = [("foo", 3); ("bar", 2)] 
+let t8d = insert () = [] 
+let t8e = insert () = [] 
+let t8f = insert () = [] 
 
 
 (*-----------------------------------------------*)
 let t9a = has ([("foo", 2)], "foo") = true
+let t9b = has ([("First", 1); ("Second", 2)], "Second") = true
+let t9c = has ([("Food", 4); ("Me", 3); ("Like", 2); ("Here", 1)], "Here") = true
+let t9d = has ([("No", 2); ("None", 1)], "Yes") = false
+let t9e = has ([("Yes", 3); ("Yep", 2); ("Yeah", 1)], "Nope") = false
+let t9f = has ([], "nothing") = false
 
 
 (*-----------------------------------------------*)
@@ -98,12 +113,21 @@ let t11b = lookup_opt ([("foo", 2); ("bar", 3)], "bar") = None
 
 
 (*-----------------------------------------------*)
-let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "baz") = [("baz", 1); ("foo", 2)]
+let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "bar") = [("baz", 1); ("foo", 2)]
+let t12b = delete ([("First", 1); ("Second", 2); ("Third", 3)], "Third") = [("First", 1); ("Second", 2)]
+let t12c = delete ([("First", 1); ("Second", 2)], "Third") = [("First", 1); ("Second", 2)]
+let t12d = delete ([("First", 1); ("Second", 2); ("Third", 3)], "First") = [("Second", 2); ("Third", 3)]
+let t12e = delete ([], "Nothing") = []
+let t12f = delete ([("First", 1); ("Second", 2); ("Third", 3)], "Second") = [("First", 1); ("Third", 3)]
 
 
 (*-----------------------------------------------*)
 let t13a = keys [("bar", 3); ("foo", 2)] = ["bar"; "foo"]
-
+let t13b = key [("first", 3)] = ["first"]
+let t13c = key [("", )] = []
+let t13d = key [("", )] = []
+let t13e = key [("", )] = []
+let t13f = key [("", )] = []
 
 (*-----------------------------------------------*)
 let t14a = is_proper [("bar", 3); ("foo", 2)] = true

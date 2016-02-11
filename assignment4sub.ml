@@ -153,13 +153,16 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    It should have type: 'a table * symbol * 'a -> 'a table
 *)
 
-let rec insert (sym_table, sym, val) =
+let rec insert (sym_table, sym, v) =
+   let new_val = (sym, v) in
    match sym_table with
-   | [] -> [(sym, val)]
+   | [] -> [new_val]
    | hd :: rest ->
-      if hd = (sym, val)
-      then 
-      else if  
+      if hd = new_val
+      then new_val :: rest
+      else if fst hd > sym
+           then new_val :: hd :: rest
+           else hd :: insert (rest, sym, v) 
 
 (*
    Write a function `has` that takes as input a pair of a symbol table and a symbol

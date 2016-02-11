@@ -78,11 +78,11 @@ let t7b = let f = fun () -> 5
 
 (*-----------------------------------------------*)
 let t8a = insert (empty, "foo", 3) = [("foo", 3)]
-let t8b = insert ([("foo", 3); ("bar", 2)], "stuff", 1) = [[("foo", 3); ("bar", 2); ("stuff", 1)] 
-let t8c = insert ([("foo", 3); ("bar", 2)], "bar", 2) = [("foo", 3); ("bar", 2)] 
-let t8d = insert () = [] 
-let t8e = insert () = [] 
-let t8f = insert () = [] 
+let t8b = insert ([("foo", 3); ("bar", 2)], "so", 1) = [("foo", 3); ("bar", 2); ("so", 1)] 
+let t8c = insert ([("bar", 2)], "bar", 2) = [("bar", 2)]
+let t8d = insert ([("x", 4); ("xx", 2); ("xxxx", 9)], "xxx", 0) = [("x", 4); ("xx", 2); ("xxx", 0); ("xxxx", 9)] 
+let t8e = insert ([("n", 7); ("nn", 4); ("nnn", 1)], "nnnn", 3) = [("n", 7); ("nn", 4); ("nnn", 1); ("nnnn", 3)] 
+let t8f = insert ([("y", 5); ("yyy", 8)], "yy", 7) = ["y", 5); ("yyy", 8); ("yy", 7)] 
 
 
 (*-----------------------------------------------*)

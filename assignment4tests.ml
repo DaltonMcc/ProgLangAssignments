@@ -82,7 +82,7 @@ let t8b = insert ([("foo", 3); ("bar", 2)], "so", 1) = [("foo", 3); ("bar", 2); 
 let t8c = insert ([("bar", 2)], "bar", 2) = [("bar", 2)]
 let t8d = insert ([("x", 4); ("xx", 2); ("xxxx", 9)], "xxx", 0) = [("x", 4); ("xx", 2); ("xxx", 0); ("xxxx", 9)] 
 let t8e = insert ([("n", 7); ("nn", 4); ("nnn", 1)], "nnnn", 3) = [("n", 7); ("nn", 4); ("nnn", 1); ("nnnn", 3)] 
-let t8f = insert ([("y", 5); ("yyy", 8)], "yy", 7) = ["y", 5); ("yyy", 8); ("yy", 7)] 
+let t8f = insert ([("y", 5); ("yyy", 8)], "yy", 7) = [("y", 5); ("yyy", 8); ("yy", 7)] 
 
 
 (*-----------------------------------------------*)
@@ -98,13 +98,14 @@ let t9f = has ([], "nothing") = false
 let t10a = lookup ([("bar", 3); ("foo", 2)], "bar") = 3
 let t10b = try (lookup ([("bar", 3); ("foo", 2)], "baz"); false)
            with Not_found -> true
-(* In the following test the search should fail because your code
-   should stop looking after baz, since "baz" > "bar".
-   This is of course not a "proper" table, but it is a good test that
-   your code behaves properly. *)
 let t10c = try (lookup ([("baz", 3); ("bar", 2)], "bar"); false)
            with Not_found -> true
-
+let t10d = lookup ([("x", 3); ("xx", 4); ("xxxx", 8)], "xxxx") = 8
+let t10c = lookup ([("x", 1); ("xx", 2), "x"]) = 1
+(*let t10e = try lookup ([("x", 3); ("xx", 4); ("xxxx", 8)], "xxx"); false)
+           with Not_found -> true *)
+let t10f = try lookup ([("xx", 3); ("xxx", 4); ("xxxx", 8)], "x"); false)
+           with Not_found -> true
 
 (*-----------------------------------------------*)
 let t11a = lookup_opt ([("bar", 3); ("foo", 2)], "bar") = Some 3

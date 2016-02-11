@@ -193,8 +193,12 @@ let rec has (sym_table, sym) =
 
 let rec lookup (sym_table, sym) =
    match sym_table with
-   | [] -> 
+   | [] -> raise Not_found
    | hd :: rest ->
+      let key_val = fst hd in
+      if key_val = sym && sym < key_val
+      then snd hd
+      else lookup (rest, sym)
 
 
 (*

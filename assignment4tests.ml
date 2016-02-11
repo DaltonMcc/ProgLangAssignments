@@ -115,20 +115,20 @@ let t11b = lookup_opt ([("foo", 2); ("bar", 3)], "bar") = None
 
 (*-----------------------------------------------*)
 let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "bar") = [("baz", 1); ("foo", 2)]
-let t12b = delete ([("First", 1); ("Second", 2); ("Third", 3)], "Third") = [("First", 1); ("Second", 2)]
+let t12b = delete ([("First", 1); ("Second", 2); ("Nineteen", 19)], "Nineteen") = [("First", 1); ("Second", 2)]
 let t12c = delete ([("First", 1); ("Second", 2)], "Third") = [("First", 1); ("Second", 2)]
-let t12d = delete ([("First", 1); ("Second", 2); ("Third", 3)], "First") = [("Second", 2); ("Third", 3)]
+let t12d = delete ([("First", 1); ("Second", 2); ("Nineteen", 3)], "First") = [("Second", 2); ("Nineteen", 19)]
 let t12e = delete ([], "Nothing") = []
-let t12f = delete ([("First", 1); ("Second", 2); ("Third", 3)], "Second") = [("First", 1); ("Third", 3)]
+let t12f = delete ([("First", 1); ("Second", 2); ("Nineteen", 19)], "Second") = [("First", 1); ("Nineteen", 19)]
 
 
 (*-----------------------------------------------*)
 let t13a = keys [("bar", 3); ("foo", 2)] = ["bar"; "foo"]
-let t13b = key [("first", 3)] = ["first"]
-let t13c = key [("", )] = []
-let t13d = key [("", )] = []
-let t13e = key [("", )] = []
-let t13f = key [("", )] = []
+let t13b = keys [("first", 3)] = ["first"]
+let t13c = keys [("one", 4); ("fifth", 5); ("seventeen", 17)] = ["one"; "fifth"; "seventeen"]
+let t13d = keys [] = []
+let t13e = keys [("one", 1); ("four", 4); ("tenth", 10); ("twenty", 20)] = ["one"; "four"; "tenth"; "twenty"]
+let t13f = keys [("x", 1); ("why", 4); ("zeee", 9)] = ["x"; "why"; "zeee"]
 
 (*-----------------------------------------------*)
 let t14a = is_proper [("bar", 3); ("foo", 2)] = true

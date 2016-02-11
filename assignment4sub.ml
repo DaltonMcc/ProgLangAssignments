@@ -211,7 +211,16 @@ let rec lookup (sym_table, sym) =
    It should have type: 'a table * symbol -> 'a option
 *)
 
-
+let rec lookup_opt (sym_table, sym) =
+   match sym_table with
+   | [] -> None
+   | hd :: rest ->
+      let head = fst hd in
+         if head > sym
+         then None
+         else if head = sym
+            then Some (snd hd)
+            else lookup_opt (rest, sym)
 
 (*
    Write a function `delete` that takes as input a pair of a symbol table and a
@@ -253,4 +262,6 @@ let rec is_proper (sym_table) =
    match sym_table with
    | [] -> ""
    | hd :: rest ->
-      fst hd > is_proper rest
+      if fst hd > 
+      then false
+      else is_proper rest

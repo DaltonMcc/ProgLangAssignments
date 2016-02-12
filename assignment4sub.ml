@@ -89,7 +89,7 @@ let thunk_of_pair (f, x) = fun () -> (f(), x())
    It should have type: 'a thunk * ('a -> 'b) -> 'b thunk
 *)
 
-let thunk_map (a_thunk, f) = fun () -> 
+let thunk_map (a_thunk, f) = fun () -> f (a_thunk())
 
 (*
    Write a function `thunk_of_list` that takes as input a list of `'a thunk`s and

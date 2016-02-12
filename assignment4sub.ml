@@ -66,9 +66,7 @@ let thunk_of_eval (f, x) = fun () -> f (x())
 *)
 
 let try_thunk (a_thunk) = 
-   match a_thunk with
-   | 
-   | v -> Some v
+
 
 (*
    Write a function `thunk_of_pair` that takes as input a pair of thunks, and returns
@@ -107,7 +105,7 @@ let thunk_of_list (thunk_lst) =
          | [] -> []
          | hd :: rest ->
             hd() :: thunk_of_list rest
-            
+
       in aux (thunk_lst)
        
 

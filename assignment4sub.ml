@@ -66,6 +66,9 @@ let thunk_of_eval (f, x) = fun () -> f (x())
 *)
 
 let try_thunk (a_thunk) = 
+   try a_thunk() with
+   | Failure _ -> None
+   | v -> Some (v)
 
 
 (*

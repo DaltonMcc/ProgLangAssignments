@@ -42,7 +42,7 @@ let t4c = try_thunk (fun () -> 5) = Some 5
 let t4d = try_thunk (fun () -> 20) = Some 20
 let t4e = try_thunk (fun () -> [1; 2; 3]) = Some [1; 2; 3]
 let t4f = try_thunk (fun () -> raise (Failure "hi back")) = None
-let t4e = try_thunk (fun () -> raise (Failure "Okay bye")) = None
+let t4g = try_thunk (fun () -> raise (Failure "Okay bye")) = None
 
 
 (*-----------------------------------------------*)

@@ -100,6 +100,17 @@ let thunk_map (a_thunk, f) = fun () -> f (a_thunk())
    It should have type: 'a thunk list -> 'a list thunk
 *)
 
+let thunk_of_list (thunk_lst) =
+   fun () -> 
+      let aux (t_lst) =
+         match t_lst with
+         | [] -> []
+         | hd :: rest ->
+            hd() :: thunk_of_list rest
+            
+      in aux (thunk_lst)
+       
+
 
 
 

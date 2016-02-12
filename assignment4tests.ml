@@ -73,8 +73,20 @@ let t7a = let f = fun () -> raise (Failure "")
                 | _ -> false
 let t7b = let f = fun () -> 5
           in thunk_of_list [f; f] () = [5; 5]
-
-
+let t7c = let f = fun () -> "string" in
+          let x = fun () -> "cat" in
+          let g = fun () -> "five"
+          in thunk_of_list [f; x; g] () = ["string"; "cat"; "five"] 
+let t7d = let f = fun () -> (3, 4) in
+          let x = fun () -> (1, 2)
+          in thunk_of_list [x; f] () = [(1, 2); (3, 4)] 
+let t7e = let f = fun () -> Some 1 in
+          let g = fun () -> Some 9
+          in thunk_of_list [f; g] () = [Some 1; Some 9] 
+let t7c = let f = fun () -> false in
+          let x = fun () -> true in
+          let g = fun () -> false
+          in thunk_of_list [f; x; g] () = [false; true; false] 
 
 
 

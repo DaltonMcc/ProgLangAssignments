@@ -111,10 +111,9 @@ let t10f = try lookup ([("xx", 3); ("xxx", 4); ("xxxx", 8)], "x"); false)
 let t11a = lookup_opt ([("bar", 3); ("foo", 2)], "bar") = Some 3
 (* Again the search should be stopping after "foo" *)
 let t11b = lookup_opt ([("foo", 2); ("bar", 3)], "bar") = None
-let t11c = lookup_opt ([("un", 1); ("two", 2); ("five", 5)], "two") = Some 2 
-let t11d = lookup_opt ([("one", 1); ("four", 4); ("seven", 7)], "seven") = Some 7
-let t11e = lookup_opt ([("one", 1); ("four", 4); ("seven", 7)], "five") = None
-let t11f = lookup_opt ([], "one") = None 
+let t11c = lookup_opt ([("one", 1); ("four", 4); ("seven", 7)], "seven") = Some 7
+let t11d = lookup_opt ([("one", 1); ("four", 4); ("seven", 7)], "five") = None
+let t11e = lookup_opt ([], "one") = None 
 
 
 (*-----------------------------------------------*)
@@ -136,3 +135,8 @@ let t13f = keys [("x", 1); ("why", 4); ("zeee", 9)] = ["x"; "why"; "zeee"]
 
 (*-----------------------------------------------*)
 let t14a = is_proper [("bar", 3); ("foo", 2)] = true
+let t14b = is_proper [("one", 1); ("five", 5); ("two", 2)] = false
+let t14c = is_proper [("one", 1); ("sixty", 6); ("five", 5)] = false
+let t14d = is_proper [("eight", 8); ("one", 1)] = false
+let t14e = is_proper [("x", 1); ("xx", 5); ("xxx", 7); ("xxxx", 4)] = true
+let t14f = is_proper [] = true

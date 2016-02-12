@@ -258,10 +258,13 @@ let rec keys (sym_table) =
    It should have type: 'a table -> bool
 *)
 
-let rec is_proper (sym_table) =
-   match sym_table with
-   | [] -> ""
-   | hd :: rest ->
-      if fst hd > 
+let is_proper (sym_table) =
+   let rec aux (key_lst, prev) =
+   match key_lst with
+   | [] -> true
+   | (key1, val1) :: rest ->
+      if key1 < prev
       then false
-      else is_proper rest
+      else aux (rest, key1)
+
+   in aux (sym_table, "")

@@ -107,7 +107,7 @@ let thunk_of_list (thunk_lst) =
          match t_lst with
          | [] -> []
          | hd :: rest ->
-            hd() :: thunk_of_list rest
+            hd() :: aux rest
 
       in aux (thunk_lst)
        

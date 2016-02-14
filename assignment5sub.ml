@@ -83,7 +83,7 @@ let calc_eval (cal, x) =
    (though the parentheses will not show)
 *)
 
-
+let func_of_calc (cal) = 
 
 (*
    Write a function `subst` that takes as input a pair of calculations (c1, c2)
@@ -92,7 +92,7 @@ let calc_eval (cal, x) =
    It should have type: calc * calc -> calc
 *)
 
-
+let subst (c1, c2) =
 
 (*
    Write a function `power` that takes as input a pair of a calculation and an
@@ -106,6 +106,7 @@ let calc_eval (cal, x) =
    It should have type: calc * int -> calc
 *)
 
+let power (cal, n) =
 
 
 (*
@@ -119,6 +120,8 @@ let calc_eval (cal, x) =
    - When the coefficient "a" is 1.
    It should have type: int * int -> calc
 *)
+
+let term (a, n) =
 
 
 (*
@@ -134,7 +137,8 @@ let calc_eval (cal, x) =
    It should have type: (int * int) list -> calc
 *)
 
-
+let poly (lst_pair) =
+   
 
 (*
    This is a difficult problem, with many objectives. Do as much of it as you can.

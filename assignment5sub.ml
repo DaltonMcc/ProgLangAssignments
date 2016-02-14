@@ -51,6 +51,8 @@ type calc = Var
 let has_vars (cal) =
    match cal with
    | var -> true
+   | _ -> false
+
 
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
@@ -59,6 +61,7 @@ let has_vars (cal) =
 *)
 
 let count_vars (cal) =
+
 
 
 (*
@@ -71,7 +74,7 @@ let count_vars (cal) =
 let calc_eval (cal, x) =
    if has_vars (cal)
    then 
-   else
+   else 
 
 
 (*
@@ -138,7 +141,7 @@ let term (a, n) =
 *)
 
 let poly (lst_pair) =
-   
+
 
 (*
    This is a difficult problem, with many objectives. Do as much of it as you can.

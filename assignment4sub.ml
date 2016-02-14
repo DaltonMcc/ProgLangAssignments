@@ -103,7 +103,7 @@ let thunk_map (a_thunk, f) = fun () -> f (a_thunk())
 
 let thunk_of_list (thunk_lst) =
    fun () -> 
-      let aux (t_lst) =
+      let rec aux (t_lst) =
          match t_lst with
          | [] -> []
          | hd :: rest ->

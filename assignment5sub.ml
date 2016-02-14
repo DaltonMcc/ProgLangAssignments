@@ -48,12 +48,17 @@ type calc = Var
    It should have type calc -> bool
 *)
 
+let has_vars (cal) =
+   match cal with
+   | var -> true
 
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
    number of references to the variable in that calculation. Do NOT use `has_vars`.
    It should have type: calc -> int
 *)
+
+let count_vars (cal) =
 
 
 (*
@@ -63,6 +68,10 @@ type calc = Var
    It should have type: calc * int -> int
 *)
 
+let calc_eval (cal, x) =
+   if has_vars (cal)
+   then 
+   else
 
 
 (*

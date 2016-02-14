@@ -4,10 +4,10 @@
 (*----------------------------------------------*)
 let t8a = has_vars (Add (Var, Int 2))
 let t8b = not (has_vars (Add (Int 1, Int 2)))
-let t8c = has_vars (Sub (Var, Int -1))
+let t8c = has_vars (Sub (Var, Int 1))
 let t8d = has_vars (Add (Var, Var))
-let t8e = not (has_vars (Sub (Int 1, Int -1)))
-let t8f = not (has_vars (Add (Int 5, Int 5))
+let t8e = not (has_vars (Sub (Int 2, Int 1)))
+let t8f = not (has_vars (Add (Int 5, Int 5)))
 let t8g = has_vars (Mul (Var, Int 1))
 
 (*----------------------------------------------*)

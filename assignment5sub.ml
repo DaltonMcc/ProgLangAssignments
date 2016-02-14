@@ -50,8 +50,8 @@ type calc = Var
 
 let has_vars (cal) =
    match cal with
-   | var -> true
-   | _ -> false
+   | Sub (c1, c2) | Add (c1, c2) | Mul (c1, c2) ->
+      c1 = Var || c2 = Var
 
 
 (*
@@ -73,7 +73,10 @@ let count_vars (cal) =
 
 let calc_eval (cal, x) =
    if has_vars (cal)
-   then 
+   then match cal with
+   | Add (c1, c2) -> 
+   | Sub (c1, c2) ->
+   | Mul (c1, c2) -> 
    else 
 
 

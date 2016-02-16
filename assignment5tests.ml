@@ -71,6 +71,12 @@ let t14f = term (5, 3) = Mul (Int 5, Power (Var, Int 3))
 
 (*----------------------------------------------*)
 let t15a = poly [(2, 1); (1, 4)] = Add (term (2, 1), term (1, 4))
+let t15b = poly [(2, 1); (0, 2); (1, 4)] = Add (term (2, 1), term (1, 4))
+let t15c = poly [(0, 1); (0, 4)] = Int 0
+let t15d = poly [(0, 1)] = Int 0
+let t15e = poly [] = Int 0
+let t15f = poly [(2, 1); (0, 1)] = term (2, 1)
+let t15g = poly [(0, 1); (2, 1)] = term (2, 1)
 
 
 (*----------------------------------------------*)

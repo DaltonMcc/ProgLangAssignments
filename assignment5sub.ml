@@ -61,7 +61,14 @@ let has_vars (cal) =
 *)
 
 let count_vars (cal) =
-
+   let count = 0 in 
+   match cal with 
+   | Sub (c1, c2) | Add (c1, c2) | Mul (c1, c2) ->
+      if c1 = Var && c2 = Var
+      then count + 2
+      else if c1 = Var || c2 = Var
+        then count + 1
+        else count
 
 
 (*
@@ -74,10 +81,11 @@ let count_vars (cal) =
 let calc_eval (cal, x) =
    if has_vars (cal)
    then match cal with
-   | Add (c1, c2) -> 
-   | Sub (c1, c2) ->
-   | Mul (c1, c2) -> 
-   else 
+   | Add (c1, c2) | Sub (c1, c2) | Mul (c1, c2) -> 
+      if c1 = Var
+      then Var = x
+      else Var = x
+
 
 
 (*
@@ -90,6 +98,7 @@ let calc_eval (cal, x) =
 *)
 
 let func_of_calc (cal) = 
+   fun () -> 
 
 (*
    Write a function `subst` that takes as input a pair of calculations (c1, c2)
@@ -98,7 +107,7 @@ let func_of_calc (cal) =
    It should have type: calc * calc -> calc
 *)
 
-let subst (c1, c2) =
+let subst (c1, c2) = 
 
 (*
    Write a function `power` that takes as input a pair of a calculation and an

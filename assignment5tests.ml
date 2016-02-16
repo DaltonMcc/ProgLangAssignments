@@ -14,9 +14,9 @@ let t8g = has_vars (Mul (Var, Int 1))
 let t9a = count_vars (Add (Var, Int 2)) = 1
 let t9b = count_vars (Add (Int 1, Int 2)) = 0
 let t9c = count_vars (Sub (Var, Var)) = 2 
-let t9d = count_vars (Add ((Sub (Var, Int 1), Var))) = 2
+let t9d = count_vars (Add (Var, Int 1)) = 2
 let t9e = count_vars (Mul (Int 1, Int 1)) = 0
-let t9f = count_vars (Sub (Add (Var, Var), Var)) = 3 
+let t9f = count_vars (Sub (Var, Var)) = 3 
 
 
 (*----------------------------------------------*)

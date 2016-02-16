@@ -98,7 +98,7 @@ let calc_eval (cal, x) =
 *)
 
 let func_of_calc (cal) = 
-   fun () -> 
+
 
 (*
    Write a function `subst` that takes as input a pair of calculations (c1, c2)
@@ -108,6 +108,10 @@ let func_of_calc (cal) =
 *)
 
 let subst (c1, c2) = 
+   match c2 with
+   | Add (p1, p2) -> Add (c1, c1)
+   | Sub (p1, p2) -> Sub (c1, c1)
+   | Mul (p1, p2) -> Mul (c1, c1)
 
 (*
    Write a function `power` that takes as input a pair of a calculation and an

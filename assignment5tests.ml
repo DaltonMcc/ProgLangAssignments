@@ -14,9 +14,9 @@ let t8g = has_vars (Mul (Var, Int 1))
 let t9a = count_vars (Add (Var, Int 2)) = 1
 let t9b = count_vars (Add (Int 1, Int 2)) = 0
 let t9c = count_vars (Sub (Var, Var)) = 2 
-let t9d = count_vars (Add (Var, Int 1)) = 2
+let t9d = count_vars (Add (Var, Int 1)) = 1
 let t9e = count_vars (Mul (Int 1, Int 1)) = 0
-let t9f = count_vars (Sub (Var, Var)) = 3 
+let t9f = count_vars (Sub (Var, Var)) = 2 
 
 
 (*----------------------------------------------*)
@@ -40,6 +40,16 @@ let t11f = func_of_calc (Mul (Var, Var)) 3 = 9
 (*----------------------------------------------*)
 let t12a = subst (Add (Var, Int 1), Mul (Var, Var)) =
                 Mul (Add (Var, Int 1), Add (Var, Int 1))
+let t12b = subst (Sub (Var, Var), Add (Int 1, Var)) = 
+				Add (Sub (Var, Var), Sub (Var, Var)) 
+let t12c = subst (Mul (Var, Int 5), Sub (Var, Var)) = 
+				Sub (Mul (Var, Int 5), Mul (Var, Int 5))
+let t12d = subst (Add (Int 5, Int 5), Mul (Var, Var)) = 
+				Mul (Add (Int 5, Int 5), Add (Int 5, Int 5))
+let t12e = subst (Sub (Var, Var), Sub (Int 5, Var)) = 
+				Sub (Sub (Var, Var), Sub (Var, Var))
+let t12f = subst (Mul (Int 1, Int 6), Add (Var, Int 4)) = 
+				Add (Mul (Int 1, Int 6), Mul (Int 1, Int 6)) 
 
 
 (*----------------------------------------------*)

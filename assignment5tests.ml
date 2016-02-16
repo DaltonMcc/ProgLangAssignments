@@ -21,7 +21,7 @@ let t9f = count_vars (Sub (Var, Var)) = 2
 
 (*----------------------------------------------*)
 let t10a = calc_eval (Add (Var, Int 2), 3) = 5
-let t10b = calc_eval (Sub (Var, Int 5) 10) = 5
+let t10b = calc_eval (Sub (Var, Int 5), 10) = 5
 let t10c = calc_eval (Mul (Var, 2), 4) = 8
 let t10d = calc_eval (Add (Var, Var), 7) = 14 
 let t10e = calc_eval (Sub (Int 100, Var), 1) = 99
@@ -54,10 +54,19 @@ let t12f = subst (Mul (Int 1, Int 6), Add (Var, Int 4)) =
 
 (*----------------------------------------------*)
 let t13a = power 3 = Mul (Mul (Var, Var), Var)
+let t13b = power 2 = Mul (Var, Var)
+let t13c = power 1 = Var
+let t13d = power 4 = Mul (Mul (Mul (Var, Var), Var), Var)
+let t13e = power 5 = Mul (Mul (Mul (Mul (Var, Var), Var), Var), Var)
 
 
 (*----------------------------------------------*)
 let t14a = term (2, 1) = Mul(Int 2, Var)
+let t14b = term (1, 4) = Power (Var, Int 4)
+let t14c = term (0, 2) = Mul (Int 0, Var)
+let t14d = term (2, 2) = Mul (Int 2, Power (Var, Int 2))
+let t14e = term (3, 2) = Mul (Int 3, Power (Var, Int 2))
+let t14f = term (5, 3) = Mul (Int 5, Power (Var, Int 3))
 
 
 (*----------------------------------------------*)

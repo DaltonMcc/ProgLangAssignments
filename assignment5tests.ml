@@ -22,8 +22,8 @@ let t9f = count_vars (Sub (Var, Var)) = 2
 (*----------------------------------------------*)
 let t10a = calc_eval (Add (Var, Int 2), 3) = 5
 let t10b = calc_eval (Sub (Var, Int 5), 10) = 5
-let t10c = calc_eval (Mul (Var, 2), 4) = 8
-let t10d = calc_eval (Add (Var, Var), 7) = 14 
+let t10c = calc_eval (Mul (Var, Int 2), 4) = 8
+let t10d = calc_eval (Add (Int 7, Var), 7) = 14 
 let t10e = calc_eval (Sub (Int 100, Var), 1) = 99
 let t10f = calc_eval (Mul (Int 10, Var), 3) = 30
 
@@ -32,9 +32,9 @@ let t10f = calc_eval (Mul (Int 10, Var), 3) = 30
 let t11a = func_of_calc (Add (Var, Int 2)) 3 = 5
 let t11b = func_of_calc (Sub (Var, Int 5)) 6 = 1 
 let t11c = func_of_calc (Mul (Int 2, Var)) 5 = 10
-let t11d = func_of_calc (Add (Var, Var)) 4 = 8 
+let t11d = func_of_calc (Add (Var, Int 4)) 4 = 8 
 let t11e = func_of_calc (Sub (Int 15, Var)) 8 = 7
-let t11f = func_of_calc (Mul (Var, Var)) 3 = 9 
+let t11f = func_of_calc (Mul (Int 3, Var)) 3 = 9 
 
 
 (*----------------------------------------------*)

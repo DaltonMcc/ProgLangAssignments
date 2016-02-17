@@ -79,22 +79,28 @@ let count_vars (cal) =
 *)
 
 let calc_eval (cal, x) =
-   let x' = Int x in
    match cal with
    | Add (c1, c2) -> 
       if c1 = Var
-      then Add (x', c2)
-      else Add (c1, x')
+      then (x + (match c2 with
+                  | Int i -> i))
+      else ((match c1 with
+             | Int i -> i) + x)
 
    | Sub (c1, c2) ->
       if c1 = Var
-      then Sub (x', c2)
-      else Sub (c1, x')
+      then (x - (match c2 with
+                  | Int i -> i))
+      else ((match c1 with
+             | Int i -> i) - x)
 
    | Mul (c1, c2) ->
       if c1 = Var
-      then Mul (x', c2)
-      else Mul (c1, x')
+      then (x * (match c2 with
+                  | Int i -> i))
+      else ((match c1 with
+             | Int i -> i) * x)
+
 
 
 
@@ -108,7 +114,7 @@ let calc_eval (cal, x) =
 *)
 
 let func_of_calc (cal) = 
-   
+   fun x -> calc_eval (cal, x)
 
 (*
    Write a function `subst` that takes as input a pair of calculations (c1, c2)
@@ -137,7 +143,7 @@ let subst (c1, c2) =
 
 let power (cal, n) = 
    if n = 0
-   then 
+   then Mul (Int 1, Int n)
    else if n = 1
          then calc
          else 

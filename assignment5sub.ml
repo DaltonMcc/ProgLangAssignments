@@ -143,10 +143,14 @@ let subst (c1, c2) =
 
 let power (cal, n) = 
    if n = 0
-   then Mul (Int 1, Int n)
+   then Mul (Int 1, Int 1)
    else if n = 1
-         then calc
-         else 
+         then cal
+         else let rec aux (calc, x) =
+                  if x = 1
+                  then Mul (calc, calc)
+                  else Mul (aux (calc, x-1), calc) 
+               in aux (cal, n-1)
 
 
 (*
@@ -168,7 +172,7 @@ let term (a, n) =
         then Mul (Int a, Int 1)
         else if a = 1
              then Mul (Var, Int n)
-             else Mul (Int a, power (Var, Int n)) 
+             else Mul (Int a, power (Var, n))
 
 
 (*

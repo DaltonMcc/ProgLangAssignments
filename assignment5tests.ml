@@ -53,20 +53,20 @@ let t12f = subst (Mul (Int 1, Int 6), Add (Var, Int 4)) =
 
 
 (*----------------------------------------------*)
-let t13a = power 3 = Mul (Mul (Var, Var), Var)
-let t13b = power 2 = Mul (Var, Var)
-let t13c = power 1 = Var
-let t13d = power 4 = Mul (Mul (Mul (Var, Var), Var), Var)
-let t13e = power 5 = Mul (Mul (Mul (Mul (Var, Var), Var), Var), Var)
+let t13a = power (Var, 3) = Mul (Mul (Var, Var), Var)
+let t13b = power (Var, 2) = Mul (Var, Var)
+let t13c = power (Var, 1) = Var
+let t13d = power (Var, 4) = Mul (Mul (Mul (Var, Var), Var), Var)
+let t13e = power (Var, 5) = Mul (Mul (Mul (Mul (Var, Var), Var), Var), Var)
 
 
 (*----------------------------------------------*)
 let t14a = term (2, 1) = Mul(Int 2, Var)
-let t14b = term (1, 4) = Power (Var, Int 4)
+let t14b = term (1, 4) = Mul (Var, Int 4)
 let t14c = term (0, 2) = Mul (Int 0, Var)
-let t14d = term (2, 2) = Mul (Int 2, Power (Var, Int 2))
-let t14e = term (3, 2) = Mul (Int 3, Power (Var, Int 2))
-let t14f = term (5, 3) = Mul (Int 5, Power (Var, Int 3))
+let t14d = term (2, 2) = Mul (Int 2, Mul (Var, Var))
+let t14e = term (3, 2) = Mul (Int 3, Mul (Var, Var))
+let t14f = term (5, 3) = Mul (Int 5, Mul (Mul (Var, Var), Var))
 
 
 (*----------------------------------------------*)

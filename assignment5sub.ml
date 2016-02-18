@@ -194,7 +194,14 @@ let term (a, n) =
    It should have type: (int * int) list -> calc
 *)
 
-let poly (lst_pair) =
+let rec poly (lst_pair) = 
+   match lst_pair with
+   | [] -> Int 0
+   | (0, _) :: rest -> poly rest
+   | (p1, p2) :: rest ->
+      if rest = []
+      then term (p1, p2)
+      else Add (term (p1, p2),  poly rest)
 
 
 (*

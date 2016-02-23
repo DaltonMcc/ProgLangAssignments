@@ -157,7 +157,7 @@ let rec drop (n, St th) =
    It should have type: `'a list -> 'a stream -> 'a stream`.
 *)
 
-let rec prepend (lst, St th) =
+
 
 (*
    Write a function `map` that takes as input a function `'a -> 'b` and a `'a stream`,
@@ -180,7 +180,7 @@ let map (f, St th) =
 *)
 
 let rec pair_up (St th) =
-   (th(), th()), pair_up (St th)
+   let (v, st') = (th(), th()) in pair_up (St th)
 
 (*
    Write a function `zip2` that takes as input a `'a stream` and a `'b stream` and

@@ -23,8 +23,10 @@ let range1 (n) =
    range 1 n
 
 
-let tabulate (f, n) =
-   (f n) 
+let rec tabulate (f, n) =
+   if n = 0
+   then []
+   else f n :: tabulate (f, n-1)
 
 
 (* ---------------------------------
@@ -75,6 +77,27 @@ let dims_pic pic =
    match pic with
    | [] -> (0, 0)
    | row :: _ -> (List.length pic, List.length row)
+
+
+
+let string_of_pxl (pxl) = 
+   match pxl with
+   | D -> "."
+   | H -> "#"
+
+
+let rec string_of_row (pxl_lst) =
+   match pxl_lst  with
+   | [] -> "\n"
+   | hd :: rest -> string_of_pxl hd ^ string_of_row rest
+
+
+
+let rec string_of_pic (pic) =
+   match pic with
+   | [] -> []
+   | row_lst :: rest -> string_of_row row_lst ^ string_of_pic rest
+
 
 
 

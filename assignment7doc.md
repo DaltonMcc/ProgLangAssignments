@@ -52,9 +52,13 @@ The main part of the assignment consists of working with the List module and hig
     - The two "dimensions" (number of rows, number of columns) do not have to be equal but they have to each be at least 6. (no 4x2 doodads)
 
     Should have type: `pic`
+
 - You are provided with a function `valid_pic` that is given a picture and returns a boolean indicating whether the picture is "valid", in the sense of having all rows of equal length. Every function that follows assumes that it is provided a valid picture. Study this function, and the next.
+
 - You are provided a function `dims_pic` that is given a (valid) picture and returns a pair of the number of rows and number of columns of the picture.
 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 - WRITE a function `string_of_pxl` that takes as input a pixel and it returns a string, a single dot if the pixel is a D, the hash/pound sign # if the pixel is H. This is a very simple function. Should have type: `pixel -> string`
 

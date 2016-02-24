@@ -13,8 +13,18 @@
 
    Place your "helpers" implementations here.
 *)
-let rec range a b = if a > b then [] else a :: range (a + 1) b
+let rec range a b = 
+   if a > b 
+   then [] 
+   else a :: range (a + 1) b
 
+
+let range1 (n) =
+   range 1 n
+
+
+let tabulate (f, n) =
+   (f n) 
 
 
 (* ---------------------------------
@@ -66,6 +76,5 @@ let dims_pic pic =
    | [] -> (0, 0)
    | row :: _ -> (List.length pic, List.length row)
 
-(*
-   Add your other functions here
-*)
+
+

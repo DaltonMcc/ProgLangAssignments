@@ -58,10 +58,17 @@ let sword = [
 [D;D;D;D;D;D;D;D;D;D;D;D;D;D;H;H];
 [D;D;D;D;D;D;D;D;D;D;D;D;D;D;H;H]]
 
-(*
-   You need to fix this.
-*)
-let doodad = []
+
+let doodad = [
+[D; D; D; D; D; H; D; D; D; D; D]
+[D; D; D; D; H; H; D; D; D; D; D]
+[D; D; D; H; D; H; D; D; D; D; D]
+[D; D; D; D; D; H; D; D; D; D; D]
+[D; D; D; D; D; H; D; D; D; D; D]
+[D; D; D; D; D; H; D; D; D; D; D]
+[D; D; D; D; D; H; D; D; D; D; D]
+[D; D; D; D; D; H; D; D; D; D; D]
+[D; D; D; H; H; H; H; H; D; D; D]]
 
 (*
    These two functions provided to you. Study how they work before continuing!
@@ -96,14 +103,14 @@ let string_of_row (pxl_lst) =
 
 let string_of_pic (pic) =
    List.fold_right (fun x acc ->
-      string_of_row x :: acc)
+      string_of_row x @^ acc)
 
 
 (*---------- FLIP Functions ----------*)
 
 let flip_vertical (pic) =
    List.fold_left (fun x acc ->
-                  string_of_row x :: acc)
+                  string_of_row x ^ acc)
                   pic []
 
 let flip_horizontal (pic) =
@@ -135,15 +142,17 @@ let pixelate ()
 (------------------------------------*)
 
 
-let stack_vertical (pic1, pic1) = 
+let stack_vertical (pic1, pic2) = 
+   if String.length (string_of_pic (pic1)) != String.length (string_of_pic (pic2))
+   then raise IncompatibleDims
+   else pic1 ^ "\n" ^ pic2 
 
 
 
 let stack_horizontal (pic1, pic2) = 
-
+   if String.length (string_of_pic (pic1)) != String.length (string_of_pic (pic2))
+   then raise IncompatibleDims
+   else pic1 ^ pic2 
 
 
 let invert (pic) =
-   string_of_pic (
-
-   )

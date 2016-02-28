@@ -23,10 +23,8 @@ let range1 (n) =
    range 1 n
 
 
-let rec tabulate (f, n) =
-   if n = 0
-   then []
-   else f n :: tabulate (f, n-1)
+let tabulate (f, n) =
+   List.fold_right (fun x rest -> (f x) :: rest) range (1 n) []
 
 
 (* ---------------------------------
@@ -79,6 +77,7 @@ let dims_pic pic =
    | row :: _ -> (List.length pic, List.length row)
 
 
+(*-------- STRING_OF Functions -------*)
 
 let string_of_pxl (pxl) = 
    match pxl with
@@ -86,18 +85,65 @@ let string_of_pxl (pxl) =
    | H -> "#"
 
 
-let rec string_of_row (pxl_lst) =
-   match pxl_lst  with
-   | [] -> "\n"
-   | hd :: rest -> string_of_pxl hd ^ string_of_row rest
+let string_of_row (pxl_lst) =
+   List.fold_right (fun x acc -> 
+      if x = D
+      then "." ^ acc
+      else "#" ^ acc)
+                     pxl_lst "\n"
 
 
 
-let rec string_of_pic (pic) =
-   match pic with
-   | [] -> []
-   | row_lst :: rest -> string_of_row row_lst ^ string_of_pic rest
+let string_of_pic (pic) =
+   List.fold_right (fun x acc ->
+      string_of_row x :: acc)
+
+
+(*---------- FLIP Functions ----------*)
+
+let flip_vertical (pic) =
+   List.fold_left (fun x acc ->
+                  string_of_row x :: acc)
+                  pic []
+
+let flip_horizontal (pic) =
+   List.fold_left (fun x acc ->
+                  )
+
+
+let flip_both (pic) =
+   flip_horizontal (flip_vertical (pic))
+
+
+(*-------------------------------------*)
+
+let mirror_vertical (pic) =
+   string_of_pic (pic) @ flip_vertical (pic)
+
+
+let mirror_horizontal (pic) =
+   string_of_pic (pic) @ flip_horizontal (pic)
+
+let mirror_both (pic) = 
+   string_of_pic (pic) @ mirror_horizontal (pic) @ mirror_vertical (pic) @ (mirror_horizontal (mirror_vertical (pic))) 
+
+
+(*-------------------------------------)
+
+let pixelate ()
+
+(------------------------------------*)
+
+
+let stack_vertical (pic1, pic1) = 
 
 
 
+let stack_horizontal (pic1, pic2) = 
 
+
+
+let invert (pic) =
+   string_of_pic (
+
+   )

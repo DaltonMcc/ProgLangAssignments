@@ -69,6 +69,8 @@ The main part of the assignment consists of working with the List module and hig
 - WRITE a function `string_of_pic` that takes as input a picture and returns a string consisting of the concatenation of the strings produced by each row. The rows already contain newline characters. You do not need to add any extra newlines. Reference solution is 1 line. Should have type: `pic -> string`
 
 
+
+
 - WRITE a function `flip_vertical` that takes as input a picture and returns a picture that is a vertical flip of the original one. Reference solution is 1 line.Should have type: `pic -> pic`
 
 
@@ -76,6 +78,8 @@ The main part of the assignment consists of working with the List module and hig
 
 
 - WRITE a function `flip_both` that takes as input a picture and returns a picture that is a "double flip" of the original one, doing both a horizontal and a vertical flip. The order of flips would not matter. Reference solution is 1 line. Should have type: `pic -> pic`
+
+
 
 
 - WRITE a function `mirror_vertical` that takes as input a picture and returns a picture that contains two copies of the original picture, one below the other but where the second copy is a mirror image of the first one, as produced by `flip_vertical`. You do not have to use `flip_vertical` along the way. It will have twice the number of rows as the original one. Reference solution is 1 line. Should have type: `pic -> pic`
@@ -87,13 +91,19 @@ The main part of the assignment consists of working with the List module and hig
 - WRITE a function `mirror_both` that takes as input a picture and returns a picture that contains four copies of the original picture, arranged in a 2x2 format, and each obtained from the nearby one via a flip in that direction. When applied to the sword picture, it should produce four swords emanating from its center. Reference solution is 1 line. Should have type: `pic -> pic`
 
 
+
+
 - WRITE a function `pixelate` that takes as input a function `f` of type `int -> int -> pixel` and two integers `m` and `n`, in that order, and produces a picture of `m` rows and `n` "columns". The pixel at the i-th row and j-th column (in other words the j-th pixel in the i-th row) is determined by the value of the function `f`. Use `tabulate` from earlier (in two places). Reference solution is 1-2 lines. Should have type: `(int -> int -> pixel) -> int -> int -> pic`
+
+
 
 
 - WRITE a function `stack_vertical` that takes as input two pictures and places them one atop the other in a vertical fashion. It should raise the exception `IncompatibleDims` if the pictures have different number of columns. Reference solution is 2 lines. Should have type: `pic -> pic -> pic`.
 
 
 - WRITE a function `stack_horizontal` that takes as input two pictures and places them next to each other in a horizontal fashion. It should raise the exception `IncompatibleDims` if the pictures have different number of rows. You should use `List.fold_right2`. You can handle the dimension check by either using the function `dims` provided earlier or letting `List.fold_right2` throw its exception (see documentation) and catching it. Or try them both! Reference solution is 2-4 lines. Should have type: `pic -> pic -> pic`.
+
+
 
 
 - WRITE a function `invert` that takes as input a picture and returns the same picture with the two "colors" inverted. Reference solution is 2-4 lines. Should have type: `pic -> pic`

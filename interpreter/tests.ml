@@ -17,6 +17,21 @@ let t1b = let env1 = bind "y" (Bool true) empty
 let t2b = let env1 = bind "z" (Bool false) empty
           in interp env1 (BoolC false) = Bool false
 
+let t3b = IfC (BoolC true, NumC 2.3, NumC 4.3) = Num 2.3
+let t4b = IfC (BoolC false, NumC 2.3, NumC 4.3) = Num 4.3
+let t5b = IfC ((IfC (1 < 2, BoolC true, BoolC false)), NumC 2.3, NumC 4.3) = Num 2.3
+let t6b = IfC ((IfC (1 > 2, BoolC true, BoolC false)), NumC 2.3, NumC 4.3) = Num 4.3
+let t7b = try (IfC (4, NumC 4, NumC 0) -> raise (Failure ""))); true) with
+          | _ -> false
+
+
+let t8b = Not (BoolC true) = false
+let t9b = Or ((NumC 1 < NumC 2), (NumC 1 > NumC 2)) = BoolC true
+let t10b = Or ((NumC 1 > NumC 2), (NumC 1 < NumC 2)) = BoolC false
+let t11b = And (NumC 1, NumC 2)
+let t12b = And (BoolC false, BoolC true)
+
+
 (* You can also test desugar to make sure it behaves properly. *)
 let t0c = desugar (NumS 2.3) = NumC 2.3
 let t1c = desugar (BoolS false) = BoolC false

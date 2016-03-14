@@ -26,6 +26,10 @@ It will be important in the following to clarify which exceptions you should be 
 
 You will probably want to create different milestones for each of these types of language extensions.
 
+
+
+
+
 ## Booleans
 
 The first thing we will do is add booleans. We will add new values, boolean primitive, conditionals, as well as logical operators desugared into conditionals.
@@ -43,6 +47,10 @@ It is important to distinguish between talking about the core/surface language's
 - Add tests for the appropriate desugaring.
 - Add two new tokens `TRUE` and `FALSE` at the top of `parser.mly` (where the `FLOAT` token is defined). They should not "contain" anything (so no need for `<float>`). You can put them both in one line, like so: `%token TRUE FALSE`.
 
+
+(*--------------------------------------------------------------------------------------------------------------------------------------------------------*)
+
+
 ### Parser modifications for interpreter
 
 The following add the appropriate parser/lexer instructions for processing booleans.
@@ -52,6 +60,12 @@ The following add the appropriate parser/lexer instructions for processing boole
 - Add cases to the `rule` section in `lexer.mll` that turns the `true` match to the `TRUE` token and similarly for `false`. The order is important, don't put the new cases too far down. The last two rules are catch-alls, and should remain at the end of the options.
 
 To test this part, you should follow the compile steps in the README file. Then start the interpreter via `./lang`, and you should be able to type `true;;` or `#t;;` (and similarly for false), and have the interpreter reply appropriately.
+
+
+
+(*--------------------------------------------------------------------------------------------------------------------------------------------------------*)
+
+
 
 ### Conditionals
 
@@ -63,11 +77,15 @@ We will now add conditionals. This does not require a new value, but it does req
 - Add a corresponding expression `IfS` at the surface language, that takes as arguments three `exprS` expressions, and it desugars into an appropriate `IfC` expression.
 - Add a case in the `desugar` match to handle `IfS` and convert it to `IfC`.
 
+
+
 We will now add "or", "and" and "not" to the surface language. They will all convert to `IfC`s.
 
 - Add an `OrS`, a `AndS` and a `NotS` to the surface language, the first two taking two expressions as arguments, the third taking only one expression.
 - Add `desugar` cases for each of them based on the following pseudo-codes: "`not e` is the same as `if e then false else true`", "`e1 or e2` is the same as `if e1 then true else if e2 then true else false`", and something analogous for `and`. Note that we did not use `if e1 then true else e2` for the "or" case, because we want to enforce the behavior that both expressions are booleans. The conditional checks that already for its test, but not for its branch values.
 - Add tests to verify the correct implementation of these constructs.
+
+
 
 Now we will add the correct components in the parser and lexer.
 
@@ -75,6 +93,8 @@ Now we will add the correct components in the parser and lexer.
 - Add `%nonassoc ELSE` below the `%nonassoc FLOAT` line.
 - Add a case in the `expr` rule in `parser.mly` that expects a `IF expr THEN expr ELSE expr` and turns it into an `IfC`. You will need to use `$2`, `$4` and so on to refer to the values of those `expr`s.
 - Add three cases in the rules in `lexer.mll` for the strings `"if"`, `"then"` and `"else"` and converting them to the corresponding tokens `IF`, `THEN`, `ELSE`. No need to use `let` assignments for these single cases.
+
+
 
 Compiling after these should allow you to write if-then-else cases. We will now add "or" and "else".
 
@@ -84,6 +104,10 @@ Compiling after these should allow you to write if-then-else cases. We will now 
 - Add a precedence rule `%nonassoc NOT` below the one for OR and AND.
 - Add an `expr` rule at the bottom of `parser.mly` for `NOT expr`.
 - Add in `lexer.mll` three rules for `"or"`, `"and"` and `"not"`.
+
+
+
+
 
 ### Arithmetic Operators
 
@@ -97,6 +121,8 @@ We will now add arithmetic operators, followed by comparison operators and final
 - Add a new case in the desugarer to convert `ArithS` to `ArithC`.
 - Add tests for the desugaring.
 
+
+
 Now we add parser/lexer operations corresponding to these.
 
 - Add in `parser.mly` four new tokens, `PLUS`, `MINUS`, `TIMES`, `DIVIDE`.
@@ -105,6 +131,10 @@ Now we add parser/lexer operations corresponding to these.
 - Add in `lexer.mll` near the bottom rules for `"+"`, `"-"` and so on, to be converted to the corresponding tokens `PLUS`, `MINUS` and so on. Remember that the last two rules there about `eof` and `any` are catchalls and need to be the last cases.
 
 You should now be able to compile and try various arithmetic operations. Also test something like `if true then 4 else 2 + 3`, and make sure that the addition binds stronger than the conditionals. Also that `2 + 3 * 4` behaves properly.
+
+
+
+
 
 ### Comparison Operators
 
@@ -117,6 +147,8 @@ The comparison operators we will consider are ">", ">=", "<", "<=". We leave equ
 - Add a new `exprS` type variant `CompS` analogous to `CompC`, and the corresponding clause in `desugar` to convert it into `CompC`.
 - Add tests for the desugaring.
 
+
+
 Now to adjust the parser/lexer:
 
 - Add a new token called `COMPOP` that contains a string in it. Model it after the `FLOAT` token.
@@ -125,6 +157,11 @@ Now to adjust the parser/lexer:
 - In `lexer.mll`, add a new binding `let comp = ">" | ">=" | "<" | "<="`, then further down a new rule `| comp as s   { COMPOP s }`. This recognizes the above four operators and stores the match as part of the `COMPOP` token.
 
 After you recompile everything, you should be ready to test the interpreter directly.
+
+
+
+
+
 
 ### Equality
 
@@ -136,6 +173,8 @@ Testing for non-equality, often denoted by `!=`, will be implemented simply as d
 - Write a new helper function `eqEval` of type `value -> value -> value` that takes as input two values and returns if those values are equal as a `Bool` value. It should do so as follows: If they are both `Num`s, it should compare the corresponding floats stored there. If they are both `Bool`s it should compare the corresponding booleans stored there. Otherwise it should return `Bool false`. You will need to update this function in the future when we create new kinds of values.
 - Add a new case in `interp` to handle the `EqC` by evaluating each operand in turn then calling `eqEval` to compare them.
 - Add two `exprC` variants: a `EqS` to mirror `EqC` and a `NeqS` and adjust `desugar` accordingly. For `NeqS` you should convert it into a combination of `NotS` and `EqS`, then desugar that.
+
+
 
 Parser/Lexer changes:
 

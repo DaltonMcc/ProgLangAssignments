@@ -20,6 +20,8 @@ type exprC = NumC of float
 type value = Num of float
 			| Bool of bool
 
+
+
 type 'a env = (string * 'a) list
 let empty = []
 
@@ -52,7 +54,12 @@ let rec desugar exprS = match exprS with
   | NotS (e)      -> if desugar e = BoolC true
                      then BoolC false
                      else BoolC true
-  | AndS (e1, e2) -> 
+  | AndS (e1, e2) -> if (desugar e1) = BoolC true
+                     then if (desugar e2) = BoolC true
+                          then BoolC true
+                          else BoolC false
+                     else BoolC false
+
 
 
 
@@ -63,11 +70,12 @@ let rec interp env r = match r with
   | NumC i        -> Num i
   | BoolC i 	    -> Bool i
   | IfC (x, y, z) -> let con_test = interp x in
-                     if (con_test != Bool)
-                     then raise Failure "interp"
-                     else if con_test
-                          then y
-                          else z
+                    if con_test = Bool true || con_test = Bool false
+                    then raise Failure ("Interp")
+                    else match con_test with
+                        | Bool true -> interp y
+                        | Bool false -> interp z
+
 
 
 

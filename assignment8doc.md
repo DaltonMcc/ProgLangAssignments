@@ -106,7 +106,7 @@ Compiling after these should allow you to write if-then-else cases. We will now 
 - Add in `lexer.mll` three rules for `"or"`, `"and"` and `"not"`.
 
 
-
+(*--------------------------------------------------------------------------------------------------------------------------------------------------*)
 
 
 ### Arithmetic Operators

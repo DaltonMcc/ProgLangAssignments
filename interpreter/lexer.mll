@@ -26,5 +26,8 @@ rule token = parse
   | "if"      { IF }
   | "then"    { THEN }
   | "else"    { ELSE }
+  | "or"      { OR }
+  | "and"     { AND }
+  | "not"     { NOT }
   | eof         { raise Eof }
   | any         { raise Unrecognized }

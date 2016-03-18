@@ -13,10 +13,13 @@
 %token MINUS
 %token DIVIDE
 %token TIMES
+%token EQ
+%token NEQ
 %token DBLSEMI
 %nonassoc FLOAT
 %nonassoc ELSE
 %left OR AND
+%nonassoc EQ NEQ
 %nonassoc NOT
 %nonassoc COMPOP
 %left PLUS MINUS
@@ -48,5 +51,6 @@ expr:
   | expr TIMES expr 			 { ArithS ("*", $1, $3) }
   | expr DIVIDE expr 			 { ArithS ("/", $1, $3) }
   | expr COMPOP expr       { CompS ($2, $1, $3) }
+  | expr EQ expr           { EqS ($1, $3) }
 ;
 

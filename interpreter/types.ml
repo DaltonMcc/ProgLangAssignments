@@ -10,6 +10,7 @@ type exprS = NumS of float
       | NotS of exprS
       | ArithS of string * exprS * exprS
       | CompS of string * exprS * exprS
+      | EqS of exprS * exprS
 
 
 (* You will need to add more cases here. *)
@@ -18,6 +19,7 @@ type exprC = NumC of float
       | IfC of exprC * exprC * exprC
       | ArithC of string * exprC * exprC
       | CompC of string * exprC * exprC
+      | EqC of exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -57,16 +59,16 @@ let arithEval (op, v1, v2) =
   match v1 with
   | NumC i -> (match v2 with
               | NumC e -> (match op with
-                          | "+" -> string_of_float (i+e)
-                          | "-" -> string_of_float (i-e)
-                          | "*" -> string_of_float (i*e)
-                          | "/" -> if e = 0
-                                   then raise Failure ("divide by zero")
-                                   else string_of_float (i/e)
-              | _ -> raise Failure ("Interp")
+                          | ("+" : string) -> (i+.e)
+                          | "-" -> (i-.e)
+                          | "*" -> (i*.e)
+                          | "/" -> if e = 0.0
+                                   then failwith ("divide by zero")
+                                   else (i/.e)
+              | _ -> failwith ("Interp")
                           )
               )
-  | _ -> raise Failure ("Interp")
+  | _ -> failwith ("Interp")
 
 
 
@@ -78,11 +80,26 @@ let arithEval (op, v1, v2) =
                           | "<" -> i < e
                           | ">=" -> i >= e
                           | "<=" -> i <= e
-                          | _ -> raise Failure ("no comparison operator")
-              | _ -> raise Failure ("Interp")
+                          | _ -> failwith ("no comparison operator")
+              | _ -> failwith ("Interp")
                           )
               )
-  | _ -> raise Failure ("Interp")
+  | _ -> failwith ("Interp")
+
+
+
+  let eqEval (v1, v2) = 
+  match v1 with
+  | NumC i -> (match v2 with
+                | NumC e -> i = e
+                | _ -> false
+                )
+  | BoolC i -> (match v2 with
+                | BoolC e -> i = e
+                | _ -> false
+                )
+  | _ -> false
+  
 
 (* INTERPRETER *)
 
@@ -116,19 +133,22 @@ let rec interp env r = match r with
   | NumC i        -> Num i
   | BoolC i 	    -> Bool i
   | IfC (f, th, els) -> let con_test = interp f in
-                    if con_test = Bool true || con_test = Bool false
-                    then raise Failure ("Interp")
+                        let in_tru = interp (BoolC true) in
+                        let in_fal = interp (BoolC false) in
+                    if con_test = in_tru || con_test = in_fal
+                    then failwith ("Interp")
                     else match con_test with
-                        | Bool true -> interp th
-                        | Bool false -> interp els
-  | ArithC (str, e1, e2) -> let e_op1 = interp e1 in
-                            let e_op2 = interp e2 in
-                              if e_op1 > e_op2
+                        | in_tru -> interp th
+                        | in_fal -> interp els
+  | ArithC (str, e1, e2) -> let op1 = interp e1 in
+                            let op2 = interp e2 in
+                              if op1 > op2
                               then arithEval (str, e1, e2)
                               else arithEval (str, e2, e1)
   | CompC (str, e1, e2) ->  let e1_comp = interp e1 in
                             let e2_comp = interp e2 in
                             compEval (str, e1_comp, e2_comp)
+  | EqC (e1, e2)        -> eqEval (interp e1, interp e2)
 
 
 

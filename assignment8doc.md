@@ -133,7 +133,7 @@ Now we add parser/lexer operations corresponding to these.
 You should now be able to compile and try various arithmetic operations. Also test something like `if true then 4 else 2 + 3`, and make sure that the addition binds stronger than the conditionals. Also that `2 + 3 * 4` behaves properly.
 
 
-
+(*-----------------------------------------------------------------------------------------------------------------------------------------------------*)
 
 
 ### Comparison Operators

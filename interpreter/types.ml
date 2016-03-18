@@ -8,12 +8,14 @@ type exprS = NumS of float
       | OrS of exprS * exprS
       | AndS of exprS * exprS
       | NotS of exprS
+      | ArithS of string * exprS * exprS
 
 
 (* You will need to add more cases here. *)
 type exprC = NumC of float
 			| BoolC of bool
       | IfC of exprC * exprC * exprC
+      | ArithC of string * exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -37,7 +39,33 @@ let bind str v env = (str, v) :: env
    HELPER METHODS
    You may be asked to add methods here. You may also choose to add your own
    helper methods here.
+
 *)
+(*
+   Implement a new "helper method" called `arithEval` with type `string -> value -> value -> value` 
+   that takes the operator and two values. If the two values are not both `Num`s then it should raise 
+   an interpreter exception. If they are then it should perform the appropriate operation and 
+   return a "value" of the result. The operators we will allow will be "+", "-", "*" and "/". 
+   It should throw an interpreter error if the operator symbol is not one of these. 
+   It should also throw an interpreter error about division by zero if the operator is division and the denominator is 0. 
+   Remember that in our arithmetic world, all numbers are floating point numbers.
+*)
+
+let arithEval (op, v1, v2) =
+  match v1 with
+  | NumC i -> (match v2 with
+              | NumC e -> (match op with
+                          | "+" -> string_of_float (i+e)
+                          | "-" -> string_of_float (i-e)
+                          | "*" -> string_of_float (i*e)
+                          | "/" -> if e = 0
+                                   then raise Failure ("divide by zero")
+                                   else string_of_float (i/e)
+              | _ -> raise Failure ("Interp")
+                          )
+              )
+  | _ -> raise Failure ("Interp")
+
 (* INTERPRETER *)
 
 (* You will need to add cases here. *)
@@ -59,7 +87,7 @@ let rec desugar exprS = match exprS with
                           then BoolC true
                           else BoolC false
                      else BoolC false
-
+  | ArithS (str, e1, e2) -> ArithC (str, desugar e1, desugar e2)
 
 
 
@@ -69,13 +97,17 @@ let rec desugar exprS = match exprS with
 let rec interp env r = match r with
   | NumC i        -> Num i
   | BoolC i 	    -> Bool i
-  | IfC (x, y, z) -> let con_test = interp x in
+  | IfC (f, th, els) -> let con_test = interp f in
                     if con_test = Bool true || con_test = Bool false
                     then raise Failure ("Interp")
                     else match con_test with
-                        | Bool true -> interp y
-                        | Bool false -> interp z
-
+                        | Bool true -> interp th
+                        | Bool false -> interp els
+  | ArithC (str, e1, e2) -> let e_op1 = interp e1 in
+                            let e_op2 = interp e2 in
+                              if e_op1 > e_op2
+                              then arithEval (str, e1, e2)
+                              else arithEval (str, e2, e1)
 
 
 

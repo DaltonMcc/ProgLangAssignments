@@ -31,6 +31,7 @@ let t10b = Or ((NumC 1 > NumC 2), (NumC 1 < NumC 2)) = BoolC false
 let t11b = And (NumC 1, NumC 2)
 let t12b = And (BoolC false, BoolC true)
 
+let t13b = Plus (NumC 2 PLUS NumC 3) = Num 5
 
 (* You can also test desugar to make sure it behaves properly. *)
 let t0c = desugar (NumS 2.3) = NumC 2.3

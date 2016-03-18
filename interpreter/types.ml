@@ -9,6 +9,7 @@ type exprS = NumS of float
       | AndS of exprS * exprS
       | NotS of exprS
       | ArithS of string * exprS * exprS
+      | CompS of string * exprS * exprS
 
 
 (* You will need to add more cases here. *)
@@ -16,6 +17,7 @@ type exprC = NumC of float
 			| BoolC of bool
       | IfC of exprC * exprC * exprC
       | ArithC of string * exprC * exprC
+      | CompC of string * exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -66,6 +68,22 @@ let arithEval (op, v1, v2) =
               )
   | _ -> raise Failure ("Interp")
 
+
+
+  let compEval (comp, v1, v2) =
+  match v1 with
+  | NumC i -> (match v2 with
+              | NumC e -> (match comp with
+                          | ">" -> i > e
+                          | "<" -> i < e
+                          | ">=" -> i >= e
+                          | "<=" -> i <= e
+                          | _ -> raise Failure ("no comparison operator")
+              | _ -> raise Failure ("Interp")
+                          )
+              )
+  | _ -> raise Failure ("Interp")
+
 (* INTERPRETER *)
 
 (* You will need to add cases here. *)
@@ -108,6 +126,9 @@ let rec interp env r = match r with
                               if e_op1 > e_op2
                               then arithEval (str, e1, e2)
                               else arithEval (str, e2, e1)
+  | CompC (str, e1, e2) ->  let e1_comp = interp e1 in
+                            let e2_comp = interp e2 in
+                            compEval (str, e1_comp, e2_comp)
 
 
 

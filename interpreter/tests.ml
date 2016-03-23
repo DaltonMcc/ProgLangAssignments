@@ -7,7 +7,7 @@ open Types
 let t0a = evaluate (NumC 2.3) = Num 2.3
 
 
-(* You can also use interp directly to specify a custom environment. *)
+(* You can also use interp directly to specify a custom environment. *)  (*  #use "tests.ml";;  *)
 let t0b = let env1 = bind "x" (Num 3.1) empty
           in interp env1 (NumC 2.3) = Num 2.3
 
@@ -17,21 +17,22 @@ let t1b = let env1 = bind "y" (Bool true) empty
 let t2b = let env1 = bind "z" (Bool false) empty
           in interp env1 (BoolC false) = Bool false
 
-let t3b = IfC (BoolC true, NumC 2.3, NumC 4.3) = Num 2.3
-let t4b = IfC (BoolC false, NumC 2.3, NumC 4.3) = Num 4.3
-let t5b = IfC ((IfC (1 < 2, BoolC true, BoolC false)), NumC 2.3, NumC 4.3) = Num 2.3
-let t6b = IfC ((IfC (1 > 2, BoolC true, BoolC false)), NumC 2.3, NumC 4.3) = Num 4.3
-let t7b = try (IfC (4, NumC 4, NumC 0) -> raise (Failure ""))); true) with
-          | _ -> false
+let t3b = evaluate (IfC (BoolC true, NumC 2.3, NumC 4.3)) = Num 2.3
+let t4b = evaluate (IfC (BoolC false, NumC 2.3, NumC 4.3)) = Num 4.3
+(*let try_true = evaluate (IfC (BoolC true, BoolC true, BoolC false))*)
+let t5b = evaluate (IfC (BoolC true, NumC 2.3, NumC 4.3)) = Num 2.3
+let t6b = evaluate (IfC (BoolC false, NumC 2.3, NumC 4.3)) = Num 4.3
+(*let t7b = try (evaluate (IfC (4, NumC 4, NumC 0))) -> raise (Failure "Not Boolean"))); true) with
+          | _ -> false*)
 
 
-let t8b = Not (BoolC true) = false
-let t9b = Or ((NumC 1 < NumC 2), (NumC 1 > NumC 2)) = BoolC true
-let t10b = Or ((NumC 1 > NumC 2), (NumC 1 < NumC 2)) = BoolC false
-let t11b = And (NumC 1, NumC 2)
-let t12b = And (BoolC false, BoolC true)
+let t8b = evaluate (desugar (NotS (BoolS true))) = Bool false
+let t9b = evaluate (desugar (OrS ((BoolS true), (BoolS false)))) = Bool true
+(* let t10b = evaluate (desugar (OrS ((BoolS false), (BoolS false)))) = Bool false *)
+let t11b = evaluate (desugar (AndS (NumS 1.1, NumS 2.2)))
+let t12b = evaluate (desugar (AndS (BoolS false, BoolS true)))
 
-let t13b = Plus (NumC 2 PLUS NumC 3) = Num 5
+let t13b = Plus (NumC 2 + NumC 3) = Num 5
 
 (* You can also test desugar to make sure it behaves properly. *)
 let t0c = desugar (NumS 2.3) = NumC 2.3

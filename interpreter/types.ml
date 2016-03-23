@@ -103,7 +103,7 @@ let rec desugar exprS = match exprS with
   | BoolS i  	    -> BoolC i
   | IfS (x, y, z) -> IfC (desugar x, desugar y, desugar z)
   | OrS (e1, e2)  -> IfC (desugar e1, BoolC true, (IfC (desugar e2, BoolC true, BoolC false)))
-  | NotS (e)      -> IfC (desugar e, BoolC true, BoolC false)
+  | NotS (e)      -> IfC (desugar e, BoolC false, BoolC true)
   | AndS (e1, e2) -> IfC (desugar e1, (IfC (desugar e2, BoolC true, BoolC false)), BoolC false)
   | ArithS (str, e1, e2) -> ArithC (str, desugar e1, desugar e2)
 
@@ -119,9 +119,11 @@ let rec interp env r =
 
   | IfC (f, th, els) -> (match f with
                         | BoolC true  -> (match th with
-                                         | NumC i -> Num i)
+                                         | NumC i -> Num i
+                                         | BoolC i -> Bool i)
                         | BoolC false -> (match els with
-                                         | NumC i -> Num i)
+                                         | NumC e -> Num e
+                                         | BoolC e -> Bool e)
                         (*| IfC (f2, th2, els2) -> interp (IfC (f2, th2, els2))*)
                         | _ -> raise (Interp ("Not Boolean"))
                         )

@@ -35,6 +35,7 @@ let empty = []
 let rec lookup str env = match env with
   | []          -> None
   | (s,v) :: tl -> if s = str then Some v else lookup str tl
+
 (* val bind :  string -> 'a -> 'a env -> 'a env *)
 let bind str v env = (str, v) :: env
 
@@ -45,60 +46,52 @@ let bind str v env = (str, v) :: env
    helper methods here.
 
 *)
-(*
-   Implement a new "helper method" called `arithEval` with type `string -> value -> value -> value` 
-   that takes the operator and two values. If the two values are not both `Num`s then it should raise 
-   an interpreter exception. If they are then it should perform the appropriate operation and 
-   return a "value" of the result. The operators we will allow will be "+", "-", "*" and "/". 
-   It should throw an interpreter error if the operator symbol is not one of these. 
-   It should also throw an interpreter error about division by zero if the operator is division and the denominator is 0. 
-   Remember that in our arithmetic world, all numbers are floating point numbers.
-*)
 
 let arithEval (op, v1, v2) =
   match v1 with
-  | NumC i -> (match v2 with
-              | NumC e -> (match op with
-                          | ("+" : string) -> (i+.e)
-                          | "-" -> (i-.e)
-                          | "*" -> (i*.e)
-                          | "/" -> if e = 0.0
-                                   then failwith ("divide by zero")
-                                   else (i/.e)
-              | _ -> failwith ("Interp")
-                          )
+  | Num i -> (match v2 with
+              | Num e -> (match op with
+                          | ("+" : string) -> Num (i +. e)
+                          | ("-" : string) -> Num (i -. e)
+                          | ("*" : string) -> Num (i *. e)
+                          | ("/" : string) -> if e = 0.0
+                                   then raise (Interp ("divide by zero"))
+                                   else Num (i /. e))
+                          | _ -> raise (Interp ("No Operator"))
+              | Bool _ | _ -> raise (Interp ("Second Value is not Num"))
+                          
               )
-  | _ -> failwith ("Interp")
+  | Bool _ | _ -> raise (Interp ("First Value is not Num"))
 
 
 
-  let compEval (comp, v1, v2) =
+let compEval (comp, v1, v2) =
   match v1 with
-  | NumC i -> (match v2 with
-              | NumC e -> (match comp with
-                          | ">" -> i > e
-                          | "<" -> i < e
-                          | ">=" -> i >= e
-                          | "<=" -> i <= e
-                          | _ -> failwith ("no comparison operator")
-              | _ -> failwith ("Interp")
-                          )
+  | Num i -> (match v2 with
+              | Num e -> (match comp with
+                          | (">" : string) -> Bool (i > e)
+                          | ("<"  : string)-> Bool (i < e)
+                          | (">=" : string)-> Bool (i >= e)
+                          | ("<=" : string) -> Bool (i <= e)
+                          | _ -> raise (Interp ("no comparison operator"))
+                        )
+              | Bool _ | _ -> raise (Interp ("Second Value is not Num"))         
               )
-  | _ -> failwith ("Interp")
+  | _ -> raise (Interp ("First Value is not Num"))
 
 
 
   let eqEval (v1, v2) = 
   match v1 with
   | NumC i -> (match v2 with
-                | NumC e -> i = e
-                | _ -> false
+                | NumC e -> Bool (i = e)
+                | _ -> Bool false
                 )
   | BoolC i -> (match v2 with
-                | BoolC e -> i = e
-                | _ -> false
+                | BoolC e -> Bool (i = e)
+                | _ -> Bool false
                 )
-  | _ -> false
+  | _ -> Bool false
   
 
 (* INTERPRETER *)
@@ -109,19 +102,9 @@ let rec desugar exprS = match exprS with
   | NumS i        -> NumC i
   | BoolS i  	    -> BoolC i
   | IfS (x, y, z) -> IfC (desugar x, desugar y, desugar z)
-  | OrS (e1, e2)  -> if desugar e1 = BoolC true
-                     then BoolC true
-                     else if desugar e2 = BoolC true
-                          then BoolC true
-                          else BoolC false
-  | NotS (e)      -> if desugar e = BoolC true
-                     then BoolC false
-                     else BoolC true
-  | AndS (e1, e2) -> if (desugar e1) = BoolC true
-                     then if (desugar e2) = BoolC true
-                          then BoolC true
-                          else BoolC false
-                     else BoolC false
+  | OrS (e1, e2)  -> IfC (desugar e1, BoolC true, (IfC (desugar e2, BoolC true, BoolC false)))
+  | NotS (e)      -> IfC (desugar e, BoolC true, BoolC false)
+  | AndS (e1, e2) -> IfC (desugar e1, (IfC (desugar e2, BoolC true, BoolC false)), BoolC false)
   | ArithS (str, e1, e2) -> ArithC (str, desugar e1, desugar e2)
 
 
@@ -129,26 +112,47 @@ let rec desugar exprS = match exprS with
 
 (* You will need to add cases here. *)
 (* interp : Value env -> exprC -> value *)
-let rec interp env r = match r with
+let rec interp env r = 
+  match r with
   | NumC i        -> Num i
   | BoolC i 	    -> Bool i
-  | IfC (f, th, els) -> let con_test = interp f in
-                        let in_tru = interp (BoolC true) in
-                        let in_fal = interp (BoolC false) in
-                    if con_test = in_tru || con_test = in_fal
-                    then failwith ("Interp")
-                    else match con_test with
-                        | in_tru -> interp th
-                        | in_fal -> interp els
-  | ArithC (str, e1, e2) -> let op1 = interp e1 in
-                            let op2 = interp e2 in
-                              if op1 > op2
-                              then arithEval (str, e1, e2)
-                              else arithEval (str, e2, e1)
-  | CompC (str, e1, e2) ->  let e1_comp = interp e1 in
-                            let e2_comp = interp e2 in
-                            compEval (str, e1_comp, e2_comp)
-  | EqC (e1, e2)        -> eqEval (interp e1, interp e2)
+
+  | IfC (f, th, els) -> (match f with
+                        | BoolC true  -> (match th with
+                                         | NumC i -> Num i)
+                        | BoolC false -> (match els with
+                                         | NumC i -> Num i)
+                        (*| IfC (f2, th2, els2) -> interp (IfC (f2, th2, els2))*)
+                        | _ -> raise (Interp ("Not Boolean"))
+                        )
+                        
+
+  | ArithC (str, e1, e2) -> let op1 = 
+                            (match e1 with
+                            | NumC i -> Num i) in
+                                let op2 = 
+                                (match e2 with
+                                | NumC e -> Num e)
+                            in (arithEval (str, op1, op2))
+
+  | CompC (str, e1, e2) ->  let e1_comp = 
+                            (match e1 with
+                            | NumC i -> Num i) in
+                                let e2_comp = 
+                                (match e2 with
+                                | NumC e -> Num e)
+                            in compEval (str, e1_comp, e2_comp)
+
+  | EqC (e1, e2)        -> (*let q1 = 
+                            (match e1 with
+                            | NumC i -> Num i
+                            | BoolC i -> Bool i) in
+                                let q2 = 
+                                (match e2 with
+                                | NumC e -> Num e
+                                | BoolC e -> Bool e)
+                            in eqEval (q1, q2*)
+                            eqEval (e1, e2)
 
 
 
@@ -162,3 +166,4 @@ let evaluate exprC = exprC |> interp []
 (* You will need to add cases to this function as you add new value types. *)
 let rec valToString r = match r with
   | Num i           -> string_of_float i
+  | Bool i          -> string_of_bool i

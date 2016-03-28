@@ -23,11 +23,6 @@
 ;; list.
 ;; The reference solution is 4 lines.
 
-(define (length lst)
-  (let ([len 0])
-        (if (null? lst)
-            (+ 0 len)
-            (+ (length (cdr lst)) 1))))
 
 ;; Write a function `get-nth`. It takes as input a list and an integer, and it returns
 ;; the n-th element in the list, starting at index 0. If the integer is negative it
@@ -35,14 +30,6 @@
 ;; return `(error "list too short")`.
 ;; The reference solution is 5 lines.
 
-(define (get-nth lst n)
-  (if (< n -1)
-      (error "negative index")
-      (if (null? lst)
-          (error "list too short")
-          (if (= n (car lst))
-              (car lst)
-              (get-nth (- n 1) (cdr lst))))))
 
 ;; Write a function `every-other`. It takes as input a list, and it returns a new list
 ;; where every other term is skipped. So applied to the list `'(1 2 3)` it should return

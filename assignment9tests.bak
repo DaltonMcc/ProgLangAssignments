@@ -9,9 +9,8 @@
 ;; add-nums
 (equal? (add-nums (list)) 0) ;;empty list
 (equal? (add-nums (list 1 2 'a 3)) 6) ;; non-number
-(equal? (add-nums (list 'a 'b 'c)) 0) ;; all non-numbers
-(equal? (add-nums (list 2 2 3)) 7)
-(equal? (add-nums (list 1 'a 'd 'c 's 1)) 2)
+
+
 
 
 ;; length
@@ -19,7 +18,6 @@
 (equal? (length (list 1 2 3 4 5)) 5)
 (equal? (length (list 1 2 'a 'b 2)) 5)
 (equal? (length (list 'c 3 1 'd)) 4)
-
 
 ;; get-nth
 (with-handlers ([exn:fail? (lambda (exn) (equal? (exn-message exn)

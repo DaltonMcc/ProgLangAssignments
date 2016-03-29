@@ -36,19 +36,25 @@
 ;; The reference solution is 5 lines.
 
 (define (get-nth lst n)
-  (if (< n -1)
+  (if (< n 0)
       (error "negative index")
       (if (null? lst)
           (error "list too short")
-          (if (= n (car lst))
+          (if (= (- n 1) 0)
               (car lst)
-              (get-nth (- n 1) (cdr lst))))))
+              (get-nth (cdr lst) (- n 1))))))
 
 ;; Write a function `every-other`. It takes as input a list, and it returns a new list
 ;; where every other term is skipped. So applied to the list `'(1 2 3)` it should return
 ;; `'(1 3)`, and the same for the list `'(1 2 3 4)`.
 ;; The reference solution is 5 lines.
 
+(define (every-other lst)
+  (let ([skip 0])
+    (if (odd? skip)
+        (begin (+ skip 1) (list (car lst) (every-other (cdr lst))))
+        (begin (+ skip 1) (every-other (cdr lst))))))
+    
 
 ;; Write a function `map`. It takes two arguments: a function and a list. It then
 ;; returns a new list of the result of applying the function on each element.

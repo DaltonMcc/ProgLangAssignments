@@ -26,8 +26,13 @@
                                                  "negative index"))])
     (get-nth null -2))   ;;negative index
 
+(with-handlers ([exn:fail? (lambda (exn) (equal? (exn-message exn)
+                                                 "list too short"))])
+    (get-nth (list 1 2 3) 4))   ;;out of bounds
 
-
+(equal? (get-nth (list 'a 'b 'c 'd) 4) 'd)
+(equal? (get-nth (list 1 2 3) 2) 2)
+(equal? (get-nth (list 1 'a 2 'b 'd 3) 4) 'b)
 
 ;; every-other
 (equal? (every-other (list 1 2 3 4)) (list 1 3)) ;; even length

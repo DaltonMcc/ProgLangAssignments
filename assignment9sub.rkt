@@ -50,30 +50,50 @@
 ;; The reference solution is 5 lines.
 
 (define (every-other lst)
-  (let ([skip 0])
-    (if (odd? skip)
-        (begin (+ skip 1) (list (car lst) (every-other (cdr lst))))
-        (begin (+ skip 1) (every-other (cdr lst))))))
+    (if (null? lst)
+        (list)
+        (if (null? (cdr lst))
+                   (list (car lst))
+                   (append (list (car lst)) (every-other (cdr (cdr lst)))))))
+
     
 
 ;; Write a function `map`. It takes two arguments: a function and a list. It then
 ;; returns a new list of the result of applying the function on each element.
 ;; The reference solution is 5 lines.
 
+(define (map f lst)
+  (if (null? lst)
+      (list)
+      (append (list (f (car lst))) (map f (cdr lst)))))
 
 ;; Write a function `map2`. It takes three arguments: a function that takes two inputs
 ;; and two lists. It then creates a single new list by applying the function to pairs
 ;; of values one from each list. The process stops when one of the lists is empty.
 ;; The reference solution is 5 lines.
 
+(define (map2 f lst1 lst2)
+  (if (or (null? lst1) (null? lst2))
+      (list)
+      (append (list (f (car lst1) (car lst2))) (map2 f (cdr lst1) (cdr lst2)))))
 
 ;; Write a function `filter`. It takes as input a function and a list and returns
 ;; a new list consisting of those elements for which the function does not return #f
 ;; The reference solution is 5 lines.
 
+(define (filter f lst)
+  (if (null? lst)
+      (list)
+      (if (equal? (f (car lst)) #t)
+          (append (list (car lst)) (filter f (cdr lst)))
+          (filter f (cdr lst)))))
 
 ;; Write a function `call-all`. It takes as input a list of "thunks", and returns a
 ;; list of the results of calling those thunks. To call a function, you put it as the
 ;; first entry in parentheses, followed by any arguments it may have.
 ;; The reference solution is 4 lines.
 
+(define (call-all th_lst)
+  (if (null? th_lst)
+      (list)
+      (append (list ((car th_lst))) (call-all (cdr th_lst)))))

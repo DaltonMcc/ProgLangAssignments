@@ -58,11 +58,9 @@
         (num 3))
 (equal? (evaluate (arith '* (num 3) (num 2)))
         (num 6))
-
 ;; We are using a try-catch form here because comp isn't
 ;; implemented yet. Your tests probably don't need to do that.
 ;; Similarly for subsequent uses of with-handlers.
-
 (with-handlers ([exn:fail? (lambda (exn) #f)])
   (equal? (evaluate (comp '< (num 3) (num 2)))
           (bool #f)))

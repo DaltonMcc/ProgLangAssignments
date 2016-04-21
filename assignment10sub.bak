@@ -50,6 +50,7 @@
 ;; the symbol.
 
 (define (lookup s env)
+  ;;()
   (error (string-append "lookup: symbol not defined: "
                         (symbol->string s))))
 
@@ -57,6 +58,7 @@
 ;; We define the language in terms of structs.
 ;; We will treat the bool and num structs as both expressions and values
 ;; So your interpreter should be producing num or bool structs (or closures)
+
 (struct var (s) #:transparent)
 (struct num (n) #:transparent)
 (struct bool (b) #:transparent)
@@ -72,8 +74,10 @@
 (struct pair-e (e1 e2) #:transparent)      ; pair/cons-cell
 (struct fst (e) #:transparent)             ; car
 (struct snd (e) #:transparent)             ; cdr
+
 ;; The closures are not something that should show up on user programs
 ;; But it's a kind of value produced by interpreting programs.
+
 (struct clos (f env))                     ; closure function environment
 
 ;; TODO: Write a function "valid-program?" that takes as input an
@@ -108,11 +112,58 @@
 ;;
 ;; The arith case is done for you as an example.
 ;; You will need to add many more cases to the cond.
+
 (define (valid-program? e)
   (cond [(arith? e)
          (and (memq (arith-op e) (list '+ '* '- '/))
               (valid-program? (arith-e1 e))
               (valid-program? (arith-e2 e)))]
+        [(num? e)
+         (number? num-n e)]
+        
+        [(bool? e)
+         (boolean? bool-b e)]
+       
+        [(var? e)
+         (symbol? var-s e)]
+        
+        [(comp? e)
+         (and (memq (comp-op e) (list '< '<= '>= '>))
+              (valid-program? (comp-e1 e))
+              (valid-program? (comp-e2 e)))]
+        
+        [(if-e? e)
+         (and (valid-program? (if-e-tst e))
+              (valid-program? (if-e-thn e))
+              (valid-program? (if-e-els e)))]
+        
+        [(eq-e? e)
+         (and (valid-program? (eq-e-e1 e))
+              (valid-program? (eq-e-e2 e)))]
+        
+        [(let-e? e)
+         (and (valid-program? (let-e-e1 e))
+              (valid-program? (let-e-e2 e)))]
+        
+        ;;[(fun? e)
+        ;; ()]
+        
+        [(call? e)
+         (and (valid-program? (call-e1 e))
+              (valid-program? (call-e2 e)))]
+        
+        [(isnul? e)
+         (valid-program? (isnul-e e))]
+        
+        [(pair-e? e)
+         (and (valid-program? (pair-e-e1 e))
+              (valid-program? (pair-e-e2 e)))]
+        
+        [(fst? e)
+         (valid-program? (fst-e e))]
+        [(snd? e)
+         (valid-program? (snd-e e))]
+        
         [else #f]))
 
 
@@ -131,11 +182,13 @@
 ;;
 ;; Do this as a big "or". The first step is done for you, you need to
 ;; add the rest.
+
 (define (value? e)
   (or (num? e)
       (bool? e)
       (nul? e)
       (clos? e)
+      (pair-e? ((pair-e-e1 e) (pair-e-e2 e)))
       #f))      ;; <---- Need to change this
 
 ;; TODO: Write a function `value-eq?` to test if two values are "equal".
@@ -146,9 +199,16 @@
 ;; - They are both `nul`s.
 ;; - They are both `pair`s and their corresponding components are equal.
 ;; - Nothing else is equal (e.g. two closures cannot equal each other)
+
 (define (value-eq? v1 v2)
   (cond [(and (num? v1) (num? v2))
          (equal? (num-n v1) (num-n v2))]
+        [(and (bool? v1) (bool? v2))
+         (equal? (bool-b v1) (bool-b v2))]
+        [(and (nul? v1) (nul? v2))
+         (equal? (nul v1) (nul v2))]
+        [(and (pair? v1) (pair? v2))
+         (equal? ((pair-e-e1 v1) (pair-e-e2 v1)) ((pair-e-e1 v2) (pair-e-e2 v2)))]
         [else #f]))          ;; <---- Need to add more cases
               
 
@@ -204,8 +264,15 @@
 ;; and interprets the expression in the environment based on the above
 ;; description.
 ;; Some cases done for you.
+
 (define (interp env e)
   (cond [(num? e) e]
+        [(bool? e) e]
+        [(nul? e) e]
+
+        [(var? e)
+         (lookup var-s env)]
+        
         [(arith? e)
          (let ([v1 (interp env (arith-e1 e))]
                [v2 (interp env (arith-e2 e))]
@@ -214,11 +281,14 @@
            (if (and (num? v1) (num? v2))
                (num (op (num-n v1) (num-n v2)))
                (error "interp: arithmetic on non-numbers")))]
+        ;;[]
+        
         [else (error "interp: unknown expression")]))
  
 ;;         EVALUATE
 ;; This method simply calls the interpreter with an initially empty environment
 ;; Do not change it
+
 (define (evaluate e)
   (interp empty e))
 

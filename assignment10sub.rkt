@@ -119,14 +119,13 @@
               (valid-program? (arith-e1 e))
               (valid-program? (arith-e2 e)))]
         [(num? e)
-         (if (number? num-n)
-             #t
-             #f)]
-        [(bool? e)
-         (boolean? bool-b)]
+         (number? num-n e)]
         
+        [(bool? e)
+         (boolean? bool-b e)]
+       
         [(var? e)
-         (symbol? var-s)]
+         (symbol? var-s e)]
         
         [(comp? e)
          (and (memq (comp-op e) (list '< '<= '>= '>))
@@ -204,13 +203,17 @@
 (define (value-eq? v1 v2)
   (cond [(and (num? v1) (num? v2))
          (equal? (num-n v1) (num-n v2))]
+        
         [(and (bool? v1) (bool? v2))
          (equal? (bool-b v1) (bool-b v2))]
+        
         [(and (nul? v1) (nul? v2))
          (equal? (nul v1) (nul v2))]
+        
         [(and (pair? v1) (pair? v2))
-         (equal? ((pair-e-e1 v1) (pair-e-e2 v1)) ((pair-e-e1 v2) (pair-e-e2 v2)))]
-        [else #f]))          ;; <---- Need to add more cases
+         (equal? ((pair-e-e1 v1) (pair-e-e2 v1))
+                 ((pair-e-e1 v2) (pair-e-e2 v2)))]
+        [else #f]))          
               
 
 ;;       INTERPRETATION
@@ -272,7 +275,7 @@
         [(nul? e) e]
 
         [(var? e)
-         (lookup var-s env)]
+         (lookup (var-s e)env)]
         
         [(arith? e)
          (let ([v1 (interp env (arith-e1 e))]
@@ -282,8 +285,58 @@
            (if (and (num? v1) (num? v2))
                (num (op (num-n v1) (num-n v2)))
                (error "interp: arithmetic on non-numbers")))]
-        ;;[]
         
+        [(comp? e)
+         (let ([r1 (interp env (comp-e1 e))]
+               [r2 (interp env (comp-e2 e))]
+               [op (case (arith-op e)
+                     ['> >] ['< <] ['>= >=] ['<= <=])])
+           (if (and (num? r1) (num? r2))
+               ;; something goes here
+               (error "interp: e1 or e2 are not numbers")))]
+
+        [(if-e? e)
+         (if (bool? (interp  env (if-e-tst e)))
+             (interp env (if-e-thn e))
+             (interp env (if-e-els e)))]
+
+        [(eq-e? e)
+         (let ([r1 (interp env (eq-e-e1 e))]
+               [r2 (interp env (eq-e-e2 e))]
+               (value-eq? r1 r2)))]
+        [(let-e? e)
+         (let (bind (let-e-s) [r1 (interp env (let-e-e1 e))] env)
+               [r2 (interp (env-r1) (let-e-e2 e))])]
+
+        [(fun? e)
+         #f]
+
+        [(call? e)
+         #f]
+
+        [(isnul? e)
+         (let ([r1 (interp env (insul-e e))])
+           (if (nul? r1)
+               (#t)
+               (#f)))]
+               
+        [(pair-e? e)
+         (let ([r1 (interp env (pair-e-e1 e))]
+               [r2 (interp env (pair-e-e2 e))])
+           (pair-e r1 r2))]
+
+        [(fst? e)
+         (let ([r1 (interp env (fst-e e))])
+         (if (pair-e? r1)
+             (pair-e-e1 r1)
+             (error: "Not part of a pair")))]
+
+        [(snd? e)
+         (let ([r2 (interp env (fst-e e))])
+         (if (pair-e? r2)
+             (pair-e-e2 r2)
+             (error: "Not part of a pair")))]
+  
         [else (error "interp: unknown expression")]))
  
 ;;         EVALUATE
@@ -317,18 +370,23 @@
 ;; expressions and returns the expression that tests that they are not
 ;; equal. This should be a combination of `not-e` and `eq-e`.
 (define (neq e1 e2)
-  #f)      ; <---- Need to fix this
+  (not-e (eq-e (e1 e2))))
+
 
 ;; TODO: Write a function `or2` that takes as input two source language
 ;; expressions `e1` and `e2` and returns the appropriate `if-e` expression
 ;; that performs the "or" of the two expressions.
+
 (define (or2 e1 e2)
+  
   #f)   ;  <----- Need to fix this
 
 ;; TODO: Write a function `and2` that takes as input two source language
 ;; expressions `e1` and `e2` and returns the appropriate `if-e` expression
 ;; that performs the "and" of the two expressions.
+
 (define (and2 e1 e2)
+  
   #f)   ;  <----- Need to fix this
 
 ;; TODO: Write a function `or-e` that takes as input any number of source
@@ -342,6 +400,7 @@
 ;; bool struct.
 ;; You can do this with a call to `foldr`. Look at the documentation to
 ;; learn about the syntax for `foldr`.
+
 (define or-e
   (lambda es
     (bool #f)))      ; <------ Need to fix this
@@ -350,6 +409,7 @@
 ;; we will instead build a macro. For no arguments, this should return
 ;; the language bool for true.
 ;; The two base cases are done for you.
+
 (define-syntax and-e
   (syntax-rules ()
     [(and-e) (bool #t)]
@@ -360,6 +420,7 @@
 ;; `(let-e* ([s1 e1] [s2 e2] ...) e)` and creates the equivalent nested 
 ;; `let-e` expression.
 ;; The two base cases are done for you.
+
 (define-syntax let-e*
   (syntax-rules ()
     [(let-e* () e) e]
@@ -374,6 +435,12 @@
 ;; You can choose either a macro approach like in `and-e` or a function
 ;; approach and `foldr` like in `or-e`.
 
+(define plus
+  #f)
+
+
+(define mult
+  #f)
 
 
 
@@ -385,7 +452,8 @@
 ;; Try out the function `-` in Racket to see examples of the behavior.
 ;; Do this as a macro, similar to `and-e`.
 
-
+(define minus
+  #f)
 
 
 ;;            LISTS
